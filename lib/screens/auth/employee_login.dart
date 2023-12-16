@@ -86,13 +86,14 @@ class EmployeeLoginScreen extends StatelessWidget {
               CustomButton(
                 title: 'Login',
                 onPress: () async {
-                  final loginResult = await BasicAuthProvider.getInstance().employee_login(
-                      _emailController.text, _passwordController.text);
+                  final loginResult = await BasicAuthProvider.getInstance()
+                      .employee_login(
+                          _emailController.text, _passwordController.text);
                   if (loginResult) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Center(child: Text("Logged In Successfuly"))));
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        'customerHomeScreen', (route) => false);
+                        'employeeHomeScreen', (route) => false);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Center(child: Text("Login Failed"))));

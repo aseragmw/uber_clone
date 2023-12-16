@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/firebase_options.dart';
+import 'package:uber_clone_app/models/VehicleManager.dart';
+import 'package:uber_clone_app/models/car_model.dart';
 import 'package:uber_clone_app/screens/auth/add_phone_number_screen.dart';
 import 'package:uber_clone_app/screens/auth/driver_login.dart';
 import 'package:uber_clone_app/screens/auth/employee_login.dart';
@@ -30,6 +32,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
       AppConstants.initAppConstants();
+
+      VehicleManager vehicleManager = VehicleManager();
+
+  // Register prototype instances
+  VehicleManager.registerPrototype("car", Car('','','','',''));
 
   runApp(const MyApp());
 }

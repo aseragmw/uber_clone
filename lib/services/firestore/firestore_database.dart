@@ -1,20 +1,24 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uber_clone_app/models/VehicleManager.dart';
 import 'package:uber_clone_app/models/car_model.dart';
 import 'package:uber_clone_app/models/complain_model.dart';
 import 'package:uber_clone_app/models/customer_model.dart';
 import 'package:uber_clone_app/models/driver_model.dart';
 import 'package:uber_clone_app/models/trip_model.dart';
+import 'package:uber_clone_app/models/vehicle_model.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 
 class FirestoreDatabase {
-  static late FirestoreDatabase _instance;
+  static FirestoreDatabase? _instance = null;
+  VehicleManager vehicleManager = VehicleManager();
+
   static FirestoreDatabase getInstance() {
     if (_instance == null) {
       _instance = FirestoreDatabase();
     }
-    return _instance;
+    return _instance!;
   }
 
   // FirestoreDatabase._() {}
@@ -28,7 +32,7 @@ class FirestoreDatabase {
       String carType,
       String carModel,
       String plateNumber,
-      Car? selectedCar) async {
+      Vehicle? selectedCar) async {
     try {
       if (carType.isNotEmpty && carModel.isNotEmpty && plateNumber.isNotEmpty) {
         late String carRef;
@@ -99,19 +103,33 @@ class FirestoreDatabase {
     }
   }
 
-  Future<Car> getCar(String carId) async {
+  Future<Vehicle> getCar(String carId) async {
     try {
-      late Car car;
+      late Vehicle car;
       await firestore.collection("cars").doc(carId).get().then((value) async {
-        car = Car(
-            carModel: value.data()!['car_model'],
-            carType: value.data()!['car_type'],
-            plate_number: value.data()!['plate_number'],
-            status: value.data()!['status'],
-            docId: value.id);
+        log(value.data().toString());
+        car = VehicleManager.createVehicle('car');
+        log('here 1');
+        car.carModel = value.data()!['car_model'];
+        log('here2');
+        car.carType = value.data()!['car_type'];
+        log('here 3');
+        car.plate_number = value.data()!['plate_number'];
+        log('here 4');
+        car.status = value.data()!['status'];
+        log('here 5');
+        car.docId = value.id;
+        log('here 6');
+        // car = Car(
+        //     carModel: value.data()!['car_model'],
+        //     carType: value.data()!['car_type'],
+        //     plate_number: value.data()!['plate_number'],
+        //     status: value.data()!['status'],
+        //     docId: value.id);
       });
       return car;
     } catch (e) {
+      log(e.toString());
       throw Exception();
     }
   }
@@ -175,25 +193,26 @@ class FirestoreDatabase {
     }
   }
 
-  Future<List<Car>> getAllCars() async {
+  Future<List<Vehicle>> getAllCars() async {
     try {
-      final List<Car> cars = [];
-      log('here 1');
+      final List<Vehicle> cars = [];
       final snapshot = await firestore.collection('cars').get();
-      log('here2');
-      // log(snapshot.docs.first.data().toString());
-      log('here 3');
 
       for (var e in snapshot.docs) {
-        log('here 4');
-        cars.add(Car(
-            carModel: e.data()['car_model'],
-            carType: e.data()['car_type'],
-            plate_number: e.data()['plate_number'],
-            status: e.data()['status'],
-            docId: e.id));
+        Vehicle car = VehicleManager.createVehicle('car');
+        car.carModel = e.data()!['car_model'];
+        car.carType = e.data()!['car_type'];
+        car.plate_number = e.data()!['plate_number'];
+        car.status = e.data()!['status'];
+        car.docId = e.id;
+        cars.add(car);
+        // cars.add(Car(
+        //     carModel: e.data()['car_model'],
+        //     carType: e.data()['car_type'],
+        //     plate_number: e.data()['plate_number'],
+        //     status: e.data()['status'],
+        //     docId: e.id));
       }
-      log('here 5');
 
       return cars;
     } catch (e) {

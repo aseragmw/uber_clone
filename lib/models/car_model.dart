@@ -1,14 +1,19 @@
-class Car {
-  final String carModel;
-  final String carType;
-  final String plate_number;
-  final String status;
-  final String docId;
+import 'package:uber_clone_app/models/vehicle_model.dart';
 
-  Car(
-      {required this.carModel,
-      required this.carType,
-      required this.plate_number,
-      required this.status,
-      required this.docId});
+class Car extends Vehicle {
+  @override
+  Car clone() {
+    return Car('','','','','');
+  }
+
+  // Car.fromJson(
+  //     {required this.carModel,
+  //     required this.carType,
+  //     required this.plate_number,
+  //     required this.status,
+  //     required this.docId});
+
+  Car(String carModel, String carType, String plate_number, String status,
+      String docId)
+      : super(carModel, carType, plate_number, status, docId);
 }

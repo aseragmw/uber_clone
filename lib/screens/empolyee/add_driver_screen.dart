@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/models/car_model.dart';
+import 'package:uber_clone_app/models/vehicle_model.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
@@ -31,7 +34,7 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
   final _plateNumberController = TextEditingController();
 
   late String selectedCarString;
-  Car? selectedCar;
+  Vehicle? selectedCar;
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +171,7 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                               selectedCarString = newValue!;
                               for (var element in snapshot.data!) {
                                 if (element.carModel == newValue) {
+                                  log(element.carModel);
                                   selectedCar = element;
                                 }
                               }
