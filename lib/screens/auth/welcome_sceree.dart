@@ -5,6 +5,7 @@ import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
+import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
@@ -14,119 +15,72 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: context.screenHeight * 0.02,
-          ),
-
-          CustomTextField(
-              hintText: 'Email',
-              trailingIcon: null,
-              obsecured: false,
-              controller: _emailController,
-              filled: false,
-              inputType: TextInputType.emailAddress),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomTextField(
-              hintText: 'Password',
-              trailingIcon: null,
-              obsecured: true,
-              controller: _passwordController,
-              filled: false,
-              inputType: TextInputType.text),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          // CustomTextField(
-          //     hintText: 'Phone Number',
-          //     trailingIcon: null,
-          //     obsecured: false,
-          //     controller: _phoneNumberController,
-          //     filled: false,
-          //     inputType: TextInputType.number),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-            title: 'Login',
-            onPress: () async {
-              final loginResult = await BasicAuthProvider.login(
-                  _emailController.text, _passwordController.text);
-              if (loginResult) {
-                Navigator.of(context).pushNamed('customerHomeScreen');
-              } else {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("error")));
-              }
-            },
-            buttonColor: AppTheme.redColor,
-            borderRadius: AppTheme.boxRadius,
-            borderColor: AppTheme.blackColor,
-            buttonWidth: context.screenWidth * 0.7,
-            buttonHeight: context.screenHeight * 0.08,
-            fontSize: AppTheme.fontSize12(context),
-          ),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          Text(
-            "Don't you have an account?",
-            style: TextStyle(
-              fontSize: context.screenHeight / context.screenWidth * 10,
-              color: Color.fromRGBO(9, 77, 61, 1),
+        body: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: context.screenHeight * 0.07,
             ),
-          ),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-              title: 'Register',
-              onPress: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    'registerScreen', (route) => false);
-              },
-              buttonColor: AppTheme.redColor,
-              borderRadius: AppTheme.boxRadius,
-              borderColor: AppTheme.blackColor,
-              buttonWidth: context.screenWidth * 0.7,
-              buttonHeight: context.screenHeight * 0.08,
-              fontSize: AppTheme.fontSize12(context)),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-              title: 'Driver?',
-              onPress: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    "driverLoginScreen", (route) => false);
-              },
-              buttonColor: AppTheme.redColor,
-              borderRadius: AppTheme.boxRadius,
-              borderColor: AppTheme.blackColor,
-              buttonWidth: context.screenWidth * 0.7,
-              buttonHeight: context.screenHeight * 0.08,
-              fontSize: AppTheme.fontSize12(context)),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-              title: 'Employee?',
-              onPress: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    "employeeLoginScreen", (route) => false);
-              },
-              buttonColor: AppTheme.redColor,
-              borderRadius: AppTheme.boxRadius,
-              borderColor: AppTheme.blackColor,
-              buttonWidth: context.screenWidth * 0.7,
-              buttonHeight: context.screenHeight * 0.08,
-              fontSize: AppTheme.fontSize12(context)),
-        ],
-      ),
-    );
+            Image.asset('assets/welcome_screen_vector.png'),
+            SpacingSizedBox(height: true, width: false),
+            SpacingSizedBox(height: true, width: false),
+            Text(
+              'Tawseela',
+              style: TextStyle(
+                  fontSize: AppTheme.fontSize20(context),
+                  fontWeight: AppTheme.fontWeight600,
+                  color: AppTheme.yellowColor),
+            ),
+            Text(
+              'Get a better riding experience',
+              style: TextStyle(
+                  fontSize: AppTheme.fontSize10(context),
+                  fontWeight: AppTheme.fontWeight400),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: context.screenHeight * 0.15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomButton(
+                title: 'Create an account',
+                onPress: () {
+                  Navigator.of(context).pushNamed('registerScreen');
+                },
+                buttonColor: AppTheme.yellowColor,
+                borderRadius: AppTheme.boxRadius,
+                borderColor: null,
+                buttonWidth: context.screenWidth * 0.8,
+                buttonHeight: context.screenHeight * 0.08,
+                fontSize: AppTheme.fontSize10(context)),
+            SpacingSizedBox(height: true, width: false),
+            CustomButton(
+                title: 'Login',
+                onPress: () {
+                  Navigator.of(context).pushNamed('loginScreen');
+                },
+                buttonColor: AppTheme.transparentColor,
+                borderRadius: AppTheme.boxRadius,
+                borderColor: AppTheme.yellowColor,
+                buttonWidth: context.screenWidth * 0.8,
+                fontColor: AppTheme.yellowColor,
+                buttonHeight: context.screenHeight * 0.08,
+                fontSize: AppTheme.fontSize10(context)),
+          ],
+        )
+      ],
+    ));
   }
 }

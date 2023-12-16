@@ -55,7 +55,7 @@ class AddCarScreen extends StatelessWidget {
           CustomButton(
             title: 'Add Car',
             onPress: () async {
-              final result = await FirestoreDatabase.addCar(
+              final result = await FirestoreDatabase.getInstance().addCar(
                   _carTypeController.text,
                   _carModelController.text,
                   _plateNumberController.text,

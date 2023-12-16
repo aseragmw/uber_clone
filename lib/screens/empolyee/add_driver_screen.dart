@@ -136,7 +136,7 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
           Divider(),
           Text('Link Car'),
           FutureBuilder(
-              future: FirestoreDatabase.getAllCars(),
+              future: FirestoreDatabase.getInstance().getAllCars(),
               builder: ((context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
@@ -210,7 +210,7 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
           CustomButton(
             title: 'Add Driver',
             onPress: () async {
-              final result = await FirestoreDatabase.addDriver(
+              final result = await FirestoreDatabase.getInstance().addDriver(
                   _fullnameController.text,
                   _emailController.text,
                   _passwordController.text,

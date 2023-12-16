@@ -20,7 +20,7 @@ class DriverrPreviousTripsScreen extends StatelessWidget {
             height: context.screenHeight * 0.02,
           ),
           FutureBuilder(
-              future: FirestoreDatabase.getPreviousTrips(
+              future: FirestoreDatabase.getInstance().getPreviousTrips(
                   null, AppConstants.driverId),
               builder: ((context, snapshot) {
                 switch (snapshot.connectionState) {
@@ -46,7 +46,7 @@ class DriverrPreviousTripsScreen extends StatelessWidget {
                               Text(
                                   'Car Fare : ${snapshot.data![index].carFare}'),
                               FutureBuilder(
-                                  future: FirestoreDatabase.getCustomer(
+                                  future: FirestoreDatabase.getInstance().getCustomer(
                                       snapshot.data![index].customerID),
                                   builder: (context, snapshot) {
                                     switch (snapshot.connectionState) {

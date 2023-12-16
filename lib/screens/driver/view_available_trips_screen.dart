@@ -16,7 +16,7 @@ class ViewAvailableTripsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainLayout(
       body: FutureBuilder(
-          future: FirestoreDatabase.getAvailableTrips(),
+          future: FirestoreDatabase.getInstance().getAvailableTrips(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -63,7 +63,7 @@ class TripCard extends StatelessWidget {
         Text('Time : ${trip.time}'),
         Text('Car Fare : ${trip.pickUp}'),
         FutureBuilder(
-            future: FirestoreDatabase.getCustomer(trip.customerID),
+            future: FirestoreDatabase.getInstance().getCustomer(trip.customerID),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -86,7 +86,7 @@ class TripCard extends StatelessWidget {
             title: 'Accept',
             onPress: () async {
               final driverId = await CacheManager.getValue('driverId');
-              final result = await FirestoreDatabase.acceptTrip(
+              final result = await FirestoreDatabase.getInstance().acceptTrip(
                 trip.tripId,driverId
               );
               if (result) {

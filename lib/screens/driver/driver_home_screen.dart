@@ -28,7 +28,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             height: context.screenHeight * 0.02,
           ),
           FutureBuilder(
-              future: FirestoreDatabase.checkForOnProgressTrip(
+              future: FirestoreDatabase.getInstance().checkForOnProgressTrip(
                   null, AppConstants.driverId),
               builder: ((context, snapshot) {
                 switch (snapshot.connectionState) {
@@ -46,7 +46,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                           Text('Time : ${snapshot.data!.time}'),
                           Text('Car Fare : ${snapshot.data!.pickUp}'),
                           FutureBuilder(
-                              future: FirestoreDatabase.getCustomer(
+                              future: FirestoreDatabase.getInstance().getCustomer(
                                   snapshot.data!.customerID),
                               builder: (context, snapshot) {
                                 switch (snapshot.connectionState) {
@@ -72,7 +72,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                               title: 'Finish Trip',
                               onPress: () async {
                                 final result =
-                                    await FirestoreDatabase.finishTrip(
+                                    await FirestoreDatabase.getInstance().finishTrip(
                                         snapshot.data!.tripId);
                                 if (result) {
                                   ScaffoldMessenger.of(context).showSnackBar(

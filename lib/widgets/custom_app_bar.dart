@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -12,12 +11,14 @@ class CustomAppBar extends StatelessWidget {
       required this.trailingWidget,
       required this.leadingOnTap,
       required this.trailingOnTap,
-      required this.centeredTitle});
+      required this.centeredTitle,
+      this.titleColor});
   final Widget? leadingWidget;
   final Widget? trailingWidget;
   final Function()? leadingOnTap;
   final Function()? trailingOnTap;
   final String? centeredTitle;
+  final Color? titleColor;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,9 @@ class CustomAppBar extends StatelessWidget {
                     child: Text(
                       centeredTitle!,
                       style: TextStyle(
-                          fontWeight: AppTheme.fontWeight700,
-                          fontSize: AppTheme.fontSize16(context)),
+                          fontWeight: AppTheme.fontWeight600,
+                          color: titleColor,
+                          fontSize: AppTheme.fontSize12(context)),
                     ),
                   ),
                 )

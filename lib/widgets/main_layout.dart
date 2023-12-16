@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 
 class MainLayout extends StatelessWidget {
-  const MainLayout({super.key, required this.body});
+  const MainLayout({super.key, required this.body, this.bottomNavBar});
   final Widget body;
+  final Widget? bottomNavBar;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: bottomNavBar,
       body: SelectionArea(
         child: SingleChildScrollView(
           child: Padding(

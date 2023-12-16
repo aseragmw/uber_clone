@@ -20,7 +20,7 @@ class ViewComplaintsScreen extends StatelessWidget {
             height: context.screenHeight * 0.02,
           ),
           FutureBuilder(
-              future: FirestoreDatabase.getComplaints(),
+              future: FirestoreDatabase.getInstance().getComplaints(),
               builder: ((context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
@@ -39,7 +39,7 @@ class ViewComplaintsScreen extends StatelessWidget {
                               Text(
                                   'Complain : ${snapshot.data![index].complain}'),
                               FutureBuilder(
-                                  future: FirestoreDatabase.getCustomer(
+                                  future: FirestoreDatabase.getInstance().getCustomer(
                                       snapshot.data![index].customerId),
                                   builder: (context, snapshot) {
                                     switch (snapshot.connectionState) {

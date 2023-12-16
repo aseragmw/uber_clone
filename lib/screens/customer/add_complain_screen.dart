@@ -6,6 +6,7 @@ import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
+import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 
 class AddComplainScreen extends StatelessWidget {
   AddComplainScreen({super.key});
@@ -13,50 +14,48 @@ class AddComplainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainLayout(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: context.screenHeight * 0.02,
-          ),
-          CustomTextField(
-              maxLines: 10,
-              hintText: 'Please write your complain',
-              trailingIcon: null,
-              obsecured: false,
-              controller: _complainController,
-              filled: false,
-              inputType: TextInputType.text),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-            title: 'Submit',
-            onPress: () async {
-              final result = await FirestoreDatabase.addComplain(
-                  _complainController.text, BasicAuthProvider.currentCustome().uid);
-              if (result) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Complain Submitted")));
-                Navigator.of(context).pop();
-              } else {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Error Occured")));
-              }
-            },
-            buttonColor: AppTheme.redColor,
-            borderRadius: AppTheme.boxRadius,
-            borderColor: AppTheme.blackColor,
-            buttonWidth: context.screenWidth * 0.7,
-            buttonHeight: context.screenHeight * 0.08,
-            fontSize: AppTheme.fontSize12(context),
-          ),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SpacingSizedBox(height: true, width: false),
+        SpacingSizedBox(height: true, width: false),
+        CustomTextField(
+            maxLines: 10,
+            hintText: 'Please write your complain',
+            trailingIcon: null,
+            obsecured: false,
+            controller: _complainController,
+            filled: false,
+            inputType: TextInputType.text),
+        SpacingSizedBox(height: true, width: false),
+        SpacingSizedBox(height: true, width: false),
+        SpacingSizedBox(height: true, width: false),
+        CustomButton(
+          title: 'Submit',
+          onPress: () async {
+            final result = await FirestoreDatabase.getInstance().addComplain(
+                _complainController.text,
+                BasicAuthProvider.getInstance().currentCustome().uid);
+            if (result) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Complain Submitted")));
+              Navigator.of(context).pop();
+            } else {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Error Occured")));
+            }
+          },
+          buttonColor: AppTheme.yellowColor,
+          borderRadius: AppTheme.boxRadius,
+          borderColor: null,
+          buttonWidth: context.screenWidth * 0.8,
+          buttonHeight: context.screenHeight * 0.08,
+          fontSize: AppTheme.fontSize10(context),
+        ),
+        SizedBox(
+          height: context.screenHeight / 50,
+        ),
+      ],
     );
   }
 }

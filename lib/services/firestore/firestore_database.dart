@@ -9,8 +9,18 @@ import 'package:uber_clone_app/models/trip_model.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 
 class FirestoreDatabase {
-  static final firestore = FirebaseFirestore.instance;
-  static Future<bool> addDriver(
+  static late FirestoreDatabase _instance;
+  static FirestoreDatabase getInstance() {
+    if (_instance == null) {
+      _instance = FirestoreDatabase();
+    }
+    return _instance;
+  }
+
+  // FirestoreDatabase._() {}
+
+  final firestore = FirebaseFirestore.instance;
+  Future<bool> addDriver(
       String fullname,
       String email,
       String password,
@@ -59,7 +69,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<bool> addCar(
+  Future<bool> addCar(
     String carType,
     String carModel,
     String plateNumber,
@@ -78,7 +88,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<bool> addComplain(String complain, String customerId) async {
+  Future<bool> addComplain(String complain, String customerId) async {
     try {
       await firestore
           .collection("complains")
@@ -89,7 +99,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<Car> getCar(String carId) async {
+  Future<Car> getCar(String carId) async {
     try {
       late Car car;
       await firestore.collection("cars").doc(carId).get().then((value) async {
@@ -106,7 +116,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<List<TripModel>> getPreviousTrips(
+  Future<List<TripModel>> getPreviousTrips(
       String? customerId, String? driverId) async {
     try {
       List<TripModel> trips = [];
@@ -149,7 +159,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<List<ComplainModel>> getComplaints() async {
+  Future<List<ComplainModel>> getComplaints() async {
     try {
       List<ComplainModel> complaints = [];
       final comapinsData = await firestore.collection('complains').get();
@@ -165,7 +175,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<List<Car>> getAllCars() async {
+  Future<List<Car>> getAllCars() async {
     try {
       final List<Car> cars = [];
       log('here 1');
@@ -191,7 +201,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<bool> bookTrip(
+  Future<bool> bookTrip(
       String pickUp, String destination, String time, String carFare) async {
     try {
       await firestore.collection('trips').add({
@@ -199,7 +209,7 @@ class FirestoreDatabase {
         'destination': destination,
         'time': time,
         'car_fare': carFare,
-        'customerID': BasicAuthProvider.currentCustome(),
+        'customerID': BasicAuthProvider.getInstance().currentCustome(),
         'driverID': '',
         'status': 'pending'
       });
@@ -209,7 +219,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<List<TripModel>> getAvailableTrips() async {
+  Future<List<TripModel>> getAvailableTrips() async {
     try {
       List<TripModel> trips = [];
       final query = await firestore
@@ -233,7 +243,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<CustomerModel> getCustomer(String customerId) async {
+  Future<CustomerModel> getCustomer(String customerId) async {
     try {
       late CustomerModel customer;
       final docRef = await firestore
@@ -258,7 +268,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<DriverModel> getDriver(String driverId) async {
+  Future<DriverModel> getDriver(String driverId) async {
     try {
       late DriverModel driver;
       final docRef = await firestore
@@ -280,7 +290,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<bool> acceptTrip(String tripId, String driverId) async {
+  Future<bool> acceptTrip(String tripId, String driverId) async {
     try {
       await firestore
           .collection('trips')
@@ -292,7 +302,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<bool> finishTrip(String tripId) async {
+  Future<bool> finishTrip(String tripId) async {
     try {
       await firestore
           .collection('trips')
@@ -304,7 +314,7 @@ class FirestoreDatabase {
     }
   }
 
-  static Future<TripModel?> checkForOnProgressTrip(
+  Future<TripModel?> checkForOnProgressTrip(
       String? customerId, String? driverId) async {
     try {
       if (driverId != null) {

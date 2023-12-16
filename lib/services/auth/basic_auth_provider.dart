@@ -6,14 +6,25 @@ import 'package:uber_clone_app/utils/app_constants.dart';
 import 'package:uber_clone_app/utils/cache_manager.dart';
 
 class BasicAuthProvider {
-  static final firebaseAuth = FirebaseAuth.instance;
-  static final firestore = FirebaseFirestore.instance;
-  static String? verifyId;
-  static User currentCustome() {
+static late BasicAuthProvider _instance;
+  static BasicAuthProvider getInstance() {
+    if (_instance == null) {
+      _instance = BasicAuthProvider();
+    }
+    return _instance;
+  }
+
+  // BasicAuthProvider._() {}
+
+
+   final firebaseAuth = FirebaseAuth.instance;
+   final firestore = FirebaseFirestore.instance;
+   String? verifyId;
+   User currentCustome() {
     return firebaseAuth.currentUser!;
   }
 
-  static Future<bool> login(String email, String password) async {
+   Future<bool> login(String email, String password) async {
     try {
       final signInResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -65,7 +76,7 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<bool> updateUserDisplayName(String name) async {
+   Future<bool> updateUserDisplayName(String name) async {
     try {
       await firebaseAuth.currentUser!.updateDisplayName(name);
       return true;
@@ -77,7 +88,7 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<bool> updateUserEmail(String email) async {
+   Future<bool> updateUserEmail(String email) async {
     try {
       await firebaseAuth.currentUser!.updateEmail(email);
       return true;
@@ -89,7 +100,7 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<bool> updateUserPassword(String password) async {
+   Future<bool> updateUserPassword(String password) async {
     try {
       await firebaseAuth.currentUser!.updatePassword(password);
       return true;
@@ -101,7 +112,7 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<void> verifyPhoneNumber(String phoneNumber) async {
+   Future<void> verifyPhoneNumber(String phoneNumber) async {
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
@@ -122,7 +133,7 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<bool> confirmOTP(String smsCode) async {
+   Future<bool> confirmOTP(String smsCode) async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verifyId!, smsCode: smsCode);
@@ -193,7 +204,7 @@ class BasicAuthProvider {
   //   }
   // }
 
-  static Future<void> register(
+   Future<bool> register(
       String name, String email, String password) async {
     try {
       final signInResult = await firebaseAuth.createUserWithEmailAndPassword(
@@ -208,9 +219,10 @@ class BasicAuthProvider {
             .collection('customers')
             .doc(docRef.id)
             .update({'customer_id': firebaseAuth.currentUser!.uid});
+        return true;
       } else {
         //TODO add auth exeptions
-        throw OperationErrorAuthException();
+        return false;
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -230,29 +242,16 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<void> logout() async {
+   Future<bool> logout() async {
     try {
-      // CacheManager.setValue(userIsLoggedInCacheKey, false);
-      // CacheManager.setValue(userNameCacheKey, '');
-      // CacheManager.setValue(userIdCacheKey, '');
-      // CacheManager.setValue(userEmailCacheKey, '');
-      // CacheManager.setValue(userProfileImgUrlCacheKey, '');
-      // CacheManager.setValue(userPasswordCacheKey, '');
-      // CacheManager.setValue(userBioCacheKey, '');
-      // AppConstants.userIsLoggedIn = false;
-      // AppConstants.userName = '';
-      // AppConstants.userId = '';
-      // AppConstants.userEmail = '';
-      // AppConstants.userProfileImgUrl = '';
-      // AppConstants.userPassword = '';
-      // AppConstants.userBio = '';
       await firebaseAuth.signOut();
+      return true;
     } catch (e) {
-      throw OperationErrorAuthException();
+      return false;
     }
   }
 
-  static Future<bool> employee_login(String email, String password) async {
+   Future<bool> employee_login(String email, String password) async {
     try {
       final credential = await firestore
           .collection("employees")
@@ -271,7 +270,7 @@ class BasicAuthProvider {
     }
   }
 
-  static Future<bool> driver_login(String email, String password) async {
+   Future<bool> driver_login(String email, String password) async {
     try {
       final credential = await firestore
           .collection("drivers")
