@@ -6,8 +6,8 @@ import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class DriverLoginScreen extends StatelessWidget {
+  DriverLoginScreen({super.key});
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -54,13 +54,14 @@ class LoginScreen extends StatelessWidget {
           CustomButton(
             title: 'Login',
             onPress: () async {
-              final loginResult = await BasicAuthProvider.login(
+              final loginResult = await BasicAuthProvider.driver_login(
                   _emailController.text, _passwordController.text);
               if (loginResult) {
-                Navigator.of(context).pushNamed('customerHomeScreen');
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    'driverHomeScreen', (route) => false);
               } else {
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("error")));
+                    .showSnackBar(SnackBar(content: Text("failed")));
               }
             },
             buttonColor: AppTheme.redColor,
@@ -99,10 +100,10 @@ class LoginScreen extends StatelessWidget {
             height: context.screenHeight / 50,
           ),
           CustomButton(
-              title: 'Driver?',
+              title: 'Employee?',
               onPress: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    "driverLoginScreen", (route) => false);
+                    "employeeLoginScreen", (route) => false);
               },
               buttonColor: AppTheme.redColor,
               borderRadius: AppTheme.boxRadius,
@@ -114,10 +115,10 @@ class LoginScreen extends StatelessWidget {
             height: context.screenHeight / 50,
           ),
           CustomButton(
-              title: 'Employee?',
+              title: 'Customer?',
               onPress: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    "employeeLoginScreen", (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("loginScreen", (route) => false);
               },
               buttonColor: AppTheme.redColor,
               borderRadius: AppTheme.boxRadius,

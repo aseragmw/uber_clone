@@ -8,11 +8,8 @@ class MainLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: GestureDetector(
-          onTap: () {
-      Focus.of(context).unfocus();
-    },
+      body: SelectionArea(
+        child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: context.screenWidth / 40,

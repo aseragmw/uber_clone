@@ -1,34 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
+import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
 
-class ConfirmOTPScreen extends StatefulWidget {
-  ConfirmOTPScreen({super.key, required this.phoneNumber});
-  final String phoneNumber;
-
-  @override
-  State<ConfirmOTPScreen> createState() => _ConfirmOTPScreenState();
-}
-
-class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
-  final _smsCodeController = TextEditingController();
-  late final String? otp;
-
-  @override
-  void initState() {
-    super.initState();
-    asyncFun();
-  }
-
-  Future<void> asyncFun() async {
-    final t = await BasicAuthProvider.verifyPhoneNumber(widget.phoneNumber);
-  }
+class AddComplainScreen extends StatelessWidget {
+  AddComplainScreen({super.key});
+  final _complainController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +21,28 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
             height: context.screenHeight * 0.02,
           ),
           CustomTextField(
-              hintText: 'OTP',
+              maxLines: 10,
+              hintText: 'Please write your complain',
               trailingIcon: null,
               obsecured: false,
-              controller: _smsCodeController,
+              controller: _complainController,
               filled: false,
-              inputType: TextInputType.number),
+              inputType: TextInputType.text),
           SizedBox(
             height: context.screenHeight / 50,
           ),
           CustomButton(
-            title: 'Confirm',
+            title: 'Submit',
             onPress: () async {
-              final sucess =
-                  await BasicAuthProvider.confirmOTP(_smsCodeController.text);
-              if (sucess == true) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    'customerHomeScreen', (route) => false);
+              final result = await FirestoreDatabase.addComplain(
+                  _complainController.text, BasicAuthProvider.currentCustome().uid);
+              if (result) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Complain Submitted")));
+                Navigator.of(context).pop();
               } else {
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text('Wrong Otp')));
+                    .showSnackBar(SnackBar(content: Text("Error Occured")));
               }
             },
             buttonColor: AppTheme.redColor,
@@ -68,6 +51,9 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
             buttonWidth: context.screenWidth * 0.7,
             buttonHeight: context.screenHeight * 0.08,
             fontSize: AppTheme.fontSize12(context),
+          ),
+          SizedBox(
+            height: context.screenHeight / 50,
           ),
         ],
       ),

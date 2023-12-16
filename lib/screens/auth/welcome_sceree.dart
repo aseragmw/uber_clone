@@ -6,8 +6,8 @@ import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class WelcomeScreen extends StatelessWidget {
+  WelcomeScreen({super.key});
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 

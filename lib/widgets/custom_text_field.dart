@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     this.inputType,
     this.minLines,
     this.maxLines,
+    this.initalValue,
   });
   final String hintText;
   final Widget? trailingIcon;
@@ -23,10 +24,13 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? inputType;
   final int? minLines;
   final int? maxLines;
+    final String? initalValue;
+
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initalValue,
       controller: controller,
       minLines: minLines,
       maxLines: maxLines ?? 1,

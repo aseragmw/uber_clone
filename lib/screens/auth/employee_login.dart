@@ -6,8 +6,8 @@ import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class EmployeeLoginScreen extends StatelessWidget {
+  EmployeeLoginScreen({super.key});
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -54,13 +54,14 @@ class LoginScreen extends StatelessWidget {
           CustomButton(
             title: 'Login',
             onPress: () async {
-              final loginResult = await BasicAuthProvider.login(
+              final loginResult = await BasicAuthProvider.employee_login(
                   _emailController.text, _passwordController.text);
               if (loginResult) {
-                Navigator.of(context).pushNamed('customerHomeScreen');
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    'employeeHomeScreen', (route) => false);
               } else {
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("error")));
+                    .showSnackBar(SnackBar(content: Text("Failed")));
               }
             },
             buttonColor: AppTheme.redColor,
@@ -114,10 +115,10 @@ class LoginScreen extends StatelessWidget {
             height: context.screenHeight / 50,
           ),
           CustomButton(
-              title: 'Employee?',
+              title: 'Customer?',
               onPress: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    "employeeLoginScreen", (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("loginScreen", (route) => false);
               },
               buttonColor: AppTheme.redColor,
               borderRadius: AppTheme.boxRadius,
