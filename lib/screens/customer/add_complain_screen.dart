@@ -42,6 +42,7 @@ class AddComplainScreen extends StatelessWidget {
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Error Occured")));
             }
+            
           },
           buttonColor: AppTheme.yellowColor,
           borderRadius: AppTheme.boxRadius,
