@@ -39,17 +39,20 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           _selectedIndex = index;
         }),
         items: [
-          FlashyTabBarItem(
+          FlashyTabBarItem(            inactiveColor: AppTheme.blackColor,
+
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.map_outlined),
             title: const Text('Trips'),
           ),
-          FlashyTabBarItem(
+          FlashyTabBarItem(            inactiveColor: AppTheme.blackColor,
+
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.history),
             title: const Text('History'),
           ),
-          FlashyTabBarItem(
+          FlashyTabBarItem(            inactiveColor: AppTheme.blackColor,
+
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.face),
             title: const Text('Pofile'),

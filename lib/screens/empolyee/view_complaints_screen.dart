@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 
-
 class ViewComplaintsScreen extends StatelessWidget {
   const ViewComplaintsScreen({super.key});
 

@@ -74,29 +74,31 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
         }),
         items: [
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.face),
             title: const Text('Add Driver'),
           ),
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.car_repair),
             title: const Text('Add A Car'),
           ),
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.warning),
             title: const Text('Complaints'),
           ),
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.face),
             title: const Text('Profile'),
           ),
         ],
       ),
-     
-      
     );
   }
 }

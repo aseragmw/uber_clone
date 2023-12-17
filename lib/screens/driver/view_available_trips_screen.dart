@@ -32,16 +32,13 @@ class ViewAvailableTripsScreen extends StatelessWidget {
                   ),
                 );
               }
-              return SizedBox(
-                height: context.screenHeight * 0.8,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return TripCard(trip: snapshot.data![index]);
-                  },
-                ),
+              return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return TripCard(trip: snapshot.data![index]);
+                },
               );
             default:
               return const CircularProgressIndicator();

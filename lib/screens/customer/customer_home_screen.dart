@@ -56,21 +56,25 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
         }),
         items: [
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.car_rental),
             title: const Text('Book Trip'),
           ),
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.history),
             title: const Text('Trips History'),
           ),
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.warning),
             title: const Text('Complaint'),
           ),
           FlashyTabBarItem(
+            inactiveColor: AppTheme.blackColor,
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.face),
             title: const Text('Profile'),
