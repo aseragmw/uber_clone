@@ -23,6 +23,8 @@ class FirestoreDatabase {
   // FirestoreDatabase._() {}
 
   final firestore = FirebaseFirestore.instance;
+
+  
   Future<bool> addDriver(
       String fullname,
       String email,

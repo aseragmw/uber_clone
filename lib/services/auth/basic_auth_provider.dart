@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uber_clone_app/services/auth/auth_exceptions.dart';
 import 'package:uber_clone_app/utils/app_constants.dart';
 import 'package:uber_clone_app/utils/cache_manager.dart';
 
