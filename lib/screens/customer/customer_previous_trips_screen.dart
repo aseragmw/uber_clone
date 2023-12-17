@@ -33,159 +33,173 @@ class _CustomerPreviousTripsScreenState
                   return const CircularProgressIndicator();
 
                 case ConnectionState.done:
-                  final TextEditingController _rateConroller =
-                      TextEditingController();
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    final TextEditingController _rateConroller =
+                        TextEditingController();
 
-                  return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TripHistoryItem(
-                                keyy: 'Pick Up',
-                                value: snapshot.data![index].pickUp),
-                            TripHistoryItem(
-                                keyy: 'Destination',
-                                value: snapshot.data![index].destination),
-                            TripHistoryItem(
-                                keyy: 'Time',
-                                value: snapshot.data![index].time),
-                            TripHistoryItem(
-                                keyy: 'Car Fare',
-                                value: snapshot.data![index].carFare),
-                            TripHistoryItem(
-                                keyy: 'Trip Rate',
-                                value: snapshot.data![index].tripRate),
-                            FutureBuilder(
-                                future: FirestoreDatabase.getInstance()
-                                    .getDriver(snapshot.data![index].driverID),
-                                builder: (context, snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                    case ConnectionState.active:
-                                      return const CircularProgressIndicator();
+                    return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TripHistoryItem(
+                                  keyy: 'Pick Up',
+                                  value: snapshot.data![index].pickUp),
+                              TripHistoryItem(
+                                  keyy: 'Destination',
+                                  value: snapshot.data![index].destination),
+                              TripHistoryItem(
+                                  keyy: 'Time',
+                                  value: snapshot.data![index].time),
+                              TripHistoryItem(
+                                  keyy: 'Car Fare',
+                                  value: snapshot.data![index].carFare),
+                              TripHistoryItem(
+                                  keyy: 'Trip Rate',
+                                  value: snapshot.data![index].tripRate),
+                              FutureBuilder(
+                                  future: FirestoreDatabase.getInstance()
+                                      .getDriver(
+                                          snapshot.data![index].driverID),
+                                  builder: (context, snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                      case ConnectionState.active:
+                                        return const CircularProgressIndicator();
 
-                                    case ConnectionState.done:
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          TripHistoryItem(
-                                              keyy: 'Driver',
-                                              value: snapshot.data!.fullname),
-                                          TripHistoryItem(
-                                              keyy: 'Number',
-                                              value:
-                                                  snapshot.data!.phoneNumber),
-                                          FutureBuilder(
-                                              future: FirestoreDatabase
-                                                      .getInstance()
-                                                  .getCar(
-                                                      snapshot.data!.carRef),
-                                              builder: (context, snapshot) {
-                                                switch (
-                                                    snapshot.connectionState) {
-                                                  case ConnectionState.waiting:
-                                                  case ConnectionState.active:
-                                                    return const CircularProgressIndicator();
-
-                                                  case ConnectionState.done:
-                                                    return Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        TripHistoryItem(
-                                                            keyy: 'Car Type',
-                                                            value: snapshot
-                                                                .data!.carType),
-                                                        TripHistoryItem(
-                                                            keyy: 'Car Model',
-                                                            value: snapshot
-                                                                .data!
-                                                                .carModel),
-                                                        TripHistoryItem(
-                                                            keyy:
-                                                                'Plate Number',
-                                                            value: snapshot
-                                                                .data!
-                                                                .plateNumber),
-                                                      ],
-                                                    );
-                                                  default:
-                                                    return const CircularProgressIndicator();
-                                                }
-                                              }),
-                                        ],
-                                      );
-                                    default:
-                                      return const CircularProgressIndicator();
-                                  }
-                                }),
-                            const SpacingSizedBox(height: true, width: false),
-                            snapshot.data![index].tripRate == ''
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      SizedBox(
-                                        height: context.screenHeight * 0.08,
-                                        width: context.screenWidth * 0.4,
-                                        child: CustomTextField(
-                                          hintText: 'Rate from 1 to 5',
-                                          trailingIcon: null,
-                                          obsecured: false,
-                                          controller: _rateConroller,
-                                          filled: false,
-                                          inputType: TextInputType.number,
-                                        ),
-                                      ),
-                                      CustomButton(
-                                          title: 'Rate Driver',
-                                          onPress: () async {
-                                            final result =
-                                                await FirestoreDatabase
+                                      case ConnectionState.done:
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TripHistoryItem(
+                                                keyy: 'Driver',
+                                                value: snapshot.data!.fullname),
+                                            TripHistoryItem(
+                                                keyy: 'Number',
+                                                value:
+                                                    snapshot.data!.phoneNumber),
+                                            FutureBuilder(
+                                                future: FirestoreDatabase
                                                         .getInstance()
-                                                    .rateTrip(
-                                                        snapshot.data![index]
-                                                            .tripId,
-                                                        _rateConroller.text
-                                                            .toString());
-                                            if (result) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Center(
-                                                child: Text('Rate Added'),
-                                              )));
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Center(
-                                                child: Text('Error Occured'),
-                                              )));
-                                            }
-                                            setState(() {});
-                                          },
-                                          buttonColor:
-                                              AppTheme.transparentColor,
-                                          borderRadius: AppTheme.boxRadius,
-                                          borderColor: AppTheme.yellowColor,
-                                          buttonWidth:
-                                              context.screenWidth * 0.4,
-                                          buttonHeight:
-                                              context.screenHeight * 0.08,
-                                          fontColor: AppTheme.yellowColor,
-                                          fontSize:
-                                              AppTheme.fontSize10(context)),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                            const SpacingSizedBox(height: true, width: false),
-                            const Divider(),
-                          ],
-                        );
-                      });
+                                                    .getCar(
+                                                        snapshot.data!.carRef),
+                                                builder: (context, snapshot) {
+                                                  switch (snapshot
+                                                      .connectionState) {
+                                                    case ConnectionState
+                                                          .waiting:
+                                                    case ConnectionState.active:
+                                                      return const CircularProgressIndicator();
+
+                                                    case ConnectionState.done:
+                                                      return Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          TripHistoryItem(
+                                                              keyy: 'Car Type',
+                                                              value: snapshot
+                                                                  .data!
+                                                                  .carType),
+                                                          TripHistoryItem(
+                                                              keyy: 'Car Model',
+                                                              value: snapshot
+                                                                  .data!
+                                                                  .carModel),
+                                                          TripHistoryItem(
+                                                              keyy:
+                                                                  'Plate Number',
+                                                              value: snapshot
+                                                                  .data!
+                                                                  .plateNumber),
+                                                        ],
+                                                      );
+                                                    default:
+                                                      return const CircularProgressIndicator();
+                                                  }
+                                                }),
+                                          ],
+                                        );
+                                      default:
+                                        return const CircularProgressIndicator();
+                                    }
+                                  }),
+                              const SpacingSizedBox(height: true, width: false),
+                              snapshot.data![index].tripRate == ''
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        SizedBox(
+                                          height: context.screenHeight * 0.08,
+                                          width: context.screenWidth * 0.4,
+                                          child: CustomTextField(
+                                            hintText: 'Rate from 1 to 5',
+                                            trailingIcon: null,
+                                            obsecured: false,
+                                            controller: _rateConroller,
+                                            filled: false,
+                                            inputType: TextInputType.number,
+                                          ),
+                                        ),
+                                        CustomButton(
+                                            title: 'Rate Driver',
+                                            onPress: () async {
+                                              final result =
+                                                  await FirestoreDatabase
+                                                          .getInstance()
+                                                      .rateTrip(
+                                                          snapshot.data![index]
+                                                              .tripId,
+                                                          _rateConroller.text
+                                                              .toString());
+                                              if (result) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        content: Center(
+                                                  child: Text('Rate Added'),
+                                                )));
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        content: Center(
+                                                  child: Text('Error Occured'),
+                                                )));
+                                              }
+                                              setState(() {});
+                                            },
+                                            buttonColor:
+                                                AppTheme.transparentColor,
+                                            borderRadius: AppTheme.boxRadius,
+                                            borderColor: AppTheme.yellowColor,
+                                            buttonWidth:
+                                                context.screenWidth * 0.4,
+                                            buttonHeight:
+                                                context.screenHeight * 0.08,
+                                            fontColor: AppTheme.yellowColor,
+                                            fontSize:
+                                                AppTheme.fontSize10(context)),
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              const SpacingSizedBox(height: true, width: false),
+                              const Divider(),
+                            ],
+                          );
+                        });
+                  } else {
+                    return Center(
+                      child: Text(
+                        'No Previous Trips',
+                        style: TextStyle(
+                            fontSize: AppTheme.fontSize12(context),
+                            fontWeight: AppTheme.fontWeight500),
+                      ),
+                    );
+                  }
                 default:
                   return const CircularProgressIndicator();
               }
