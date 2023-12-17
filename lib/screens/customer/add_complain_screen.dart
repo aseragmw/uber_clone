@@ -38,7 +38,6 @@ class AddComplainScreen extends StatelessWidget {
             if (result) {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Complain Submitted")));
-              Navigator.of(context).pop();
             } else {
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Error Occured")));

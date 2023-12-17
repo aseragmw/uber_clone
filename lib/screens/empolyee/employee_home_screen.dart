@@ -76,7 +76,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
           FlashyTabBarItem(
             activeColor: AppTheme.yellowColor,
             icon: const Icon(Icons.face),
-            title: const Text('Add A Driver'),
+            title: const Text('Add Driver'),
           ),
           FlashyTabBarItem(
             activeColor: AppTheme.yellowColor,

@@ -56,7 +56,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           ),
         ],
       ),
-
       body: Column(
         children: [
           const CustomAppBar(
@@ -64,13 +63,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             trailingWidget: null,
             leadingOnTap: null,
             trailingOnTap: null,
-            centeredTitle: 'Tawseela Employee App',
+            centeredTitle: 'Tawseela Driver App',
             titleColor: AppTheme.yellowColor,
           ),
           tabItems[_selectedIndex],
         ],
       ),
-      
     );
   }
 }
