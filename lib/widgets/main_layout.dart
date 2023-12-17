@@ -17,7 +17,7 @@ class MainLayout extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: context.screenWidth / 40,
                   vertical: context.screenHeight * 0.05),
-              child: body,
+              child: Center(child: body),
             ),
           ),
         ),

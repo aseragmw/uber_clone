@@ -51,6 +51,9 @@ class DriverrPreviousTripsScreen extends StatelessWidget {
                             TripHistoryItem(
                                 keyy: 'Car Fare',
                                 value: snapshot.data![index].carFare),
+                            TripHistoryItem(
+                                keyy: 'Trip Rate',
+                                value: snapshot.data![index].tripRate),
                             FutureBuilder(
                                 future: FirestoreDatabase.getInstance()
                                     .getCustomer(

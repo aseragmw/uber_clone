@@ -34,10 +34,10 @@ class AddComplainScreen extends StatelessWidget {
           onPress: () async {
             final result = await FirestoreDatabase.getInstance().addComplain(
                 _complainController.text,
-                BasicAuthProvider.getInstance().currentCustome().uid);
+                BasicAuthProvider.getInstance().currentCustomer().uid);
             if (result) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Complain Submitted")));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Complain Submitted")));
               Navigator.of(context).pop();
             } else {
               ScaffoldMessenger.of(context)

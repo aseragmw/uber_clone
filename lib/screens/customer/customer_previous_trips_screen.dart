@@ -4,12 +4,20 @@ import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
+import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 import 'package:uber_clone_app/widgets/trip_history_item.dart';
 
-class CustomerPreviousTripsScreen extends StatelessWidget {
-  const CustomerPreviousTripsScreen({super.key});
+class CustomerPreviousTripsScreen extends StatefulWidget {
+  CustomerPreviousTripsScreen({super.key});
 
+  @override
+  State<CustomerPreviousTripsScreen> createState() =>
+      _CustomerPreviousTripsScreenState();
+}
+
+class _CustomerPreviousTripsScreenState
+    extends State<CustomerPreviousTripsScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +25,7 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
       children: [
         FutureBuilder(
             future: FirestoreDatabase.getInstance().getPreviousTrips(
-                BasicAuthProvider.getInstance().currentCustome().uid, null),
+                BasicAuthProvider.getInstance().currentCustomer().uid, null),
             builder: ((context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -25,6 +33,9 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                   return const CircularProgressIndicator();
 
                 case ConnectionState.done:
+                  final TextEditingController _rateConroller =
+                      TextEditingController();
+
                   return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -45,6 +56,9 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                             TripHistoryItem(
                                 keyy: 'Car Fare',
                                 value: snapshot.data![index].carFare),
+                            TripHistoryItem(
+                                keyy: 'Trip Rate',
+                                value: snapshot.data![index].tripRate),
                             FutureBuilder(
                                 future: FirestoreDatabase.getInstance()
                                     .getDriver(snapshot.data![index].driverID),
@@ -110,16 +124,63 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                                   }
                                 }),
                             const SpacingSizedBox(height: true, width: false),
-                            CustomButton(
-                                title: 'Rate Driver',
-                                onPress: () {},
-                                buttonColor: AppTheme.transparentColor,
-                                borderRadius: AppTheme.boxRadius,
-                                borderColor: AppTheme.yellowColor,
-                                buttonWidth: context.screenWidth * 0.5,
-                                buttonHeight: context.screenHeight * 0.08,
-                                fontColor: AppTheme.yellowColor,
-                                fontSize: AppTheme.fontSize10(context)),
+                            snapshot.data![index].tripRate == ''
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        height: context.screenHeight * 0.08,
+                                        width: context.screenWidth * 0.4,
+                                        child: CustomTextField(
+                                          hintText: 'Rate from 1 to 5',
+                                          trailingIcon: null,
+                                          obsecured: false,
+                                          controller: _rateConroller,
+                                          filled: false,
+                                          inputType: TextInputType.number,
+                                        ),
+                                      ),
+                                      CustomButton(
+                                          title: 'Rate Driver',
+                                          onPress: () async {
+                                            final result =
+                                                await FirestoreDatabase
+                                                        .getInstance()
+                                                    .rateTrip(
+                                                        snapshot.data![index]
+                                                            .tripId,
+                                                        _rateConroller.text
+                                                            .toString());
+                                            if (result) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                      content: Center(
+                                                child: Text('Rate Added'),
+                                              )));
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                      content: Center(
+                                                child: Text('Error Occured'),
+                                              )));
+                                            }
+                                            setState(() {});
+                                          },
+                                          buttonColor:
+                                              AppTheme.transparentColor,
+                                          borderRadius: AppTheme.boxRadius,
+                                          borderColor: AppTheme.yellowColor,
+                                          buttonWidth:
+                                              context.screenWidth * 0.4,
+                                          buttonHeight:
+                                              context.screenHeight * 0.08,
+                                          fontColor: AppTheme.yellowColor,
+                                          fontSize:
+                                              AppTheme.fontSize10(context)),
+                                    ],
+                                  )
+                                : const SizedBox(),
                             const SpacingSizedBox(height: true, width: false),
                             const Divider(),
                           ],

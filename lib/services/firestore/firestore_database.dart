@@ -142,15 +142,18 @@ class FirestoreDatabase {
             .where('status', isEqualTo: 'finished')
             .get();
         for (var element in tripsData.docs) {
-          trips.add(TripModel(
-              customerID: element.data()['customerID'],
-              tripId: element.id,
-              driverID: element.data()['driverID'],
-              carFare: element.data()['car_fare'],
-              destination: element.data()['destination'],
-              pickUp: element.data()['pick_up'],
-              status: element.data()['status'],
-              time: element.data()['time']));
+          trips.add(
+            TripModel(
+                customerID: element.data()['customerID'],
+                tripId: element.id,
+                driverID: element.data()['driverID'],
+                carFare: element.data()['car_fare'],
+                destination: element.data()['destination'],
+                pickUp: element.data()['pick_up'],
+                status: element.data()['status'],
+                time: element.data()['time'],
+                tripRate: element.data()['trip_rate']),
+          );
         }
       } else {
         final tripsData = await firestore
@@ -166,7 +169,8 @@ class FirestoreDatabase {
               destination: element.data()['destination'],
               pickUp: element.data()['pick_up'],
               status: element.data()['status'],
-              time: element.data()['time']));
+              time: element.data()['time'],
+              tripRate: element.data()['trip_rate']));
         }
       }
       return trips;
@@ -220,9 +224,10 @@ class FirestoreDatabase {
         'destination': destination,
         'time': time,
         'car_fare': carFare,
-        'customerID': BasicAuthProvider.getInstance().currentCustome().uid,
+        'customerID': BasicAuthProvider.getInstance().currentCustomer().uid,
         'driverID': '',
-        'status': 'pending'
+        'status': 'pending',
+        'trip_rate': ''
       });
       return true;
     } catch (e) {
@@ -247,7 +252,8 @@ class FirestoreDatabase {
             pickUp: element.data()['pick_up'],
             status: element.data()['status'],
             time: element.data()['time'],
-            tripId: element.id));
+            tripId: element.id,
+            tripRate: element.data()['trip_rate']));
       }
       return trips;
     } catch (e) {
@@ -326,6 +332,19 @@ class FirestoreDatabase {
     }
   }
 
+  Future<bool> rateTrip(String tripId, String rate) async {
+    try {
+      await firestore
+          .collection('trips')
+          .doc(tripId)
+          .update({'trip_rate': rate});
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
+
   Future<TripModel?> checkForOnProgressTrip(
       String? customerId, String? driverId) async {
     try {
@@ -343,7 +362,8 @@ class FirestoreDatabase {
             destination: trip.docs.first.data()['destination'],
             pickUp: trip.docs.first.data()['pick_up'],
             status: trip.docs.first.data()['status'],
-            time: trip.docs.first.data()['time']);
+            time: trip.docs.first.data()['time'],
+            tripRate: trip.docs.first.data()['trip_rate']);
       } else {
         final trip = await firestore
             .collection('trips')
@@ -358,7 +378,8 @@ class FirestoreDatabase {
             destination: trip.docs.first.data()['destination'],
             pickUp: trip.docs.first.data()['pick_up'],
             status: trip.docs.first.data()['status'],
-            time: trip.docs.first.data()['time']);
+            time: trip.docs.first.data()['time'],
+            tripRate: trip.docs.first.data()['trip_rate']);
       }
     } catch (e) {
       return null;

@@ -10,9 +10,9 @@ import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 class UpdateProfileScreen extends StatelessWidget {
   UpdateProfileScreen({super.key});
   final _emailController = TextEditingController()
-    ..text = BasicAuthProvider.getInstance().currentCustome().email!;
+    ..text = BasicAuthProvider.getInstance().currentCustomer().email!;
   final _nameController = TextEditingController()
-    ..text = BasicAuthProvider.getInstance().currentCustome().displayName!;
+    ..text = BasicAuthProvider.getInstance().currentCustomer().displayName!;
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +44,16 @@ class UpdateProfileScreen extends StatelessWidget {
           title: 'Save Changes',
           onPress: () async {
             if (_emailController.text !=
-                BasicAuthProvider.getInstance().currentCustome().email) {
-              final result = await BasicAuthProvider.getInstance().updateUserEmail(
-                  _emailController.text);
+                BasicAuthProvider.getInstance().currentCustomer().email) {
+              final result = await BasicAuthProvider.getInstance()
+                  .updateUserEmail(_emailController.text);
               if (result) {
                 await FirebaseFirestore.instance
                     .collection("customers")
                     .where('customer_id',
-                        isEqualTo: BasicAuthProvider.getInstance().currentCustome().uid)
+                        isEqualTo: BasicAuthProvider.getInstance()
+                            .currentCustomer()
+                            .uid)
                     .get()
                     .then((value) async {
                   FirebaseFirestore.instance
@@ -59,26 +61,28 @@ class UpdateProfileScreen extends StatelessWidget {
                       .doc(value.docs.first.id)
                       .update({'email': _emailController.text});
                 });
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text("Email changed")));
-              } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Error Occured changing email")));
+                    const SnackBar(content: Text("Email changed")));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Error Occured changing email")));
               }
             }
 
             if (_nameController.text !=
-                BasicAuthProvider.getInstance().currentCustome().displayName) {
-              final result = await BasicAuthProvider.getInstance().updateUserDisplayName(
-                  _nameController.text);
+                BasicAuthProvider.getInstance().currentCustomer().displayName) {
+              final result = await BasicAuthProvider.getInstance()
+                  .updateUserDisplayName(_nameController.text);
 
               if (result) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text("Name changed")));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Name changed")));
                 await FirebaseFirestore.instance
                     .collection("customers")
                     .where('customer_id',
-                        isEqualTo: BasicAuthProvider.getInstance().currentCustome().uid)
+                        isEqualTo: BasicAuthProvider.getInstance()
+                            .currentCustomer()
+                            .uid)
                     .get()
                     .then((value) async {
                   FirebaseFirestore.instance
@@ -87,8 +91,8 @@ class UpdateProfileScreen extends StatelessWidget {
                       .update({'name': _nameController.text});
                 });
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Error Occured changing Name")));
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Error Occured changing Name")));
               }
             }
           },

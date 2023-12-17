@@ -24,7 +24,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 
   List<Widget> tabItems = [
     const Home(),
-    const CustomerPreviousTripsScreen(),
+    CustomerPreviousTripsScreen(),
     AddComplainScreen(),
     UpdateProfileScreen()
   ];
@@ -88,7 +88,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: FirestoreDatabase.getInstance().checkForOnProgressTrip(
-            BasicAuthProvider.getInstance().currentCustome().uid, null),
+            BasicAuthProvider.getInstance().currentCustomer().uid, null),
         builder: ((context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

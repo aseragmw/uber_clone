@@ -25,15 +25,13 @@ import 'package:uber_clone_app/screens/empolyee/view_complaints_screen.dart';
 import 'package:uber_clone_app/utils/app_constants.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-      AppConstants.initAppConstants();
+  AppConstants.initAppConstants();
 
-
-  VehicleManager.registerPrototype("car", Car('','','','',''));
+  VehicleManager.registerPrototype("car", Car('', '', '', '', ''));
 
   runApp(const MyApp());
 }
@@ -61,16 +59,19 @@ class MyApp extends StatelessWidget {
         "employeeHomeScreen": (context) => const EmployeeHomeScreen(),
         "customerHomeScreen": (context) => const CustomerHomeScreen(),
         "driverHomeScreen": (context) => const DriverHomeScreen(),
-        "viewAvailableTripsScreen": (context) => const ViewAvailableTripsScreen(),
+        "viewAvailableTripsScreen": (context) =>
+            const ViewAvailableTripsScreen(),
         "bookTripScreen": (context) => BookTripScreen(),
-        "customerPreviousTripsScreen": (context) => const CustomerPreviousTripsScreen(),
-        "driverPreviousTripsScreen": (context) => const DriverrPreviousTripsScreen(),
+        "customerPreviousTripsScreen": (context) =>
+            CustomerPreviousTripsScreen(),
+        "driverPreviousTripsScreen": (context) =>
+            const DriverrPreviousTripsScreen(),
         "addComplainScreen": (context) => AddComplainScreen(),
         "viewComplaintsScreen": (context) => const ViewComplaintsScreen(),
         "updateProfileScreen": (context) => UpdateProfileScreen(),
         "changePasswordScreen": (context) => ChangePasswordScreen(),
         "welcomeScreen": (context) => const WelcomeScreen(),
-        },
+      },
       home: const WelcomeScreen(),
     );
   }

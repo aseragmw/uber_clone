@@ -46,6 +46,7 @@ class LoginScreen extends StatelessWidget {
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 width: context.screenWidth,

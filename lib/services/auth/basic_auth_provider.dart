@@ -19,7 +19,8 @@ class BasicAuthProvider {
   final firebaseAuth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
   String? verifyId;
-  User currentCustome() {
+
+  User currentCustomer() {
     return firebaseAuth.currentUser!;
   }
 
@@ -31,22 +32,6 @@ class BasicAuthProvider {
         return true;
       } else {
         return false;
-      }
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'invalid-email':
-          return false;
-        case 'user-disabled':
-          return false;
-
-        case 'user-not-found':
-          return false;
-
-        case 'wrong-password':
-          return false;
-
-        default:
-          return false;
       }
     } catch (e) {
       return false;
@@ -147,21 +132,10 @@ class BasicAuthProvider {
         //TODO add auth exeptions
         return false;
       }
-    } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'invalid-email':
-          throw InvalidEmailAuthException();
-        case 'email-already-in-use':
-          throw EmailAlreadyInUseAuthException();
-        case 'operation-not-allowed':
-          throw OperationNotAllowedAuthException();
-        case 'weak-password':
-          throw WeakPasswordAuthException();
-        default:
-          throw OperationErrorAuthException();
-      }
-    } catch (e) {
-      throw OperationErrorAuthException();
+    }
+    
+    catch (e) {
+      return false;
     }
   }
 
@@ -176,11 +150,11 @@ class BasicAuthProvider {
 
   Future<bool> employeeLogin(String email, String password) async {
     try {
-      final credential = await firestore
+      final res = await firestore
           .collection("employees")
           .where('email', isEqualTo: email)
           .get();
-      if (credential.docs.first.data()["password"] == password) {
+      if (res.docs.first.data()["password"] == password) {
         return true;
       } else {
         return false;
