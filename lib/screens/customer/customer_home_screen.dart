@@ -7,28 +7,24 @@ import 'package:uber_clone_app/screens/customer/update_profile_screen.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
-import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_app_bar.dart';
-import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
+import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
+import 'package:uber_clone_app/widgets/trip_history_item.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
-  CustomerHomeScreen({super.key});
+  const CustomerHomeScreen({super.key});
 
   @override
   State<CustomerHomeScreen> createState() => _CustomerHomeScreenState();
 }
 
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
-  final _emailController = TextEditingController();
-
-  final _passwordController = TextEditingController();
-
   int _selectedIndex = 0;
 
   List<Widget> tabItems = [
-    Home(),
-    CustomerPreviousTripsScreen(),
+    const Home(),
+    const CustomerPreviousTripsScreen(),
     AddComplainScreen(),
     UpdateProfileScreen()
   ];
@@ -39,7 +35,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CustomAppBar(
+          const CustomAppBar(
             leadingWidget: null,
             trailingWidget: null,
             leadingOnTap: null,
@@ -61,23 +57,23 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
         items: [
           FlashyTabBarItem(
             activeColor: AppTheme.yellowColor,
-            icon: Icon(Icons.car_rental),
-            title: Text('Book Trip'),
+            icon: const Icon(Icons.car_rental),
+            title: const Text('Book Trip'),
           ),
           FlashyTabBarItem(
             activeColor: AppTheme.yellowColor,
-            icon: Icon(Icons.history),
-            title: Text('Trips History'),
+            icon: const Icon(Icons.history),
+            title: const Text('Trips History'),
           ),
           FlashyTabBarItem(
             activeColor: AppTheme.yellowColor,
-            icon: Icon(Icons.warning),
-            title: Text('Complaint'),
+            icon: const Icon(Icons.warning),
+            title: const Text('Complaint'),
           ),
           FlashyTabBarItem(
             activeColor: AppTheme.yellowColor,
-            icon: Icon(Icons.face),
-            title: Text('Profile'),
+            icon: const Icon(Icons.face),
+            title: const Text('Profile'),
           ),
         ],
       ),
@@ -97,62 +93,83 @@ class Home extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
             case ConnectionState.active:
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
 
             case ConnectionState.done:
               if (snapshot.data != null) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Pick Up : ${snapshot.data!.pickUp}'),
-                    Text('Destination : ${snapshot.data!.destination}'),
-                    Text('Time : ${snapshot.data!.time}'),
-                    Text('Car Fare : ${snapshot.data!.carFare}'),
+                    Text(
+                      'Ongoing Trip',
+                      style: TextStyle(
+                          fontSize: AppTheme.fontSize12(context),
+                          fontWeight: AppTheme.fontWeight500),
+                    ),
+                    const SpacingSizedBox(height: true, width: false),
+                    const Divider(),
+                    const SpacingSizedBox(height: true, width: false),
+                    TripHistoryItem(
+                        keyy: 'Pick Up', value: snapshot.data!.pickUp),
+                    TripHistoryItem(
+                        keyy: 'Destination', value: snapshot.data!.destination),
+                    TripHistoryItem(keyy: 'Time', value: snapshot.data!.time),
+                    TripHistoryItem(
+                        keyy: 'Car Fare', value: snapshot.data!.carFare),
                     FutureBuilder(
-                        future: FirestoreDatabase.getInstance().getDriver(
-                            snapshot.data!.driverID),
+                        future: FirestoreDatabase.getInstance()
+                            .getDriver(snapshot.data!.driverID),
                         builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                             case ConnectionState.active:
-                              return CircularProgressIndicator();
+                              return const CircularProgressIndicator();
 
                             case ConnectionState.done:
                               return Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('Driver : ${snapshot.data!.fullname}'),
-                                  Text(
-                                      'Phone Number : ${snapshot.data!.phoneNumber}'),
+                                  TripHistoryItem(
+                                      keyy: 'Driver',
+                                      value: snapshot.data!.fullname),
+                                  TripHistoryItem(
+                                      keyy: 'Phone Number',
+                                      value: snapshot.data!.phoneNumber),
                                   FutureBuilder(
-                                      future: FirestoreDatabase.getInstance().getCar(
-                                          snapshot.data!.carRef),
+                                      future: FirestoreDatabase.getInstance()
+                                          .getCar(snapshot.data!.carRef),
                                       builder: (context, snapshot) {
                                         switch (snapshot.connectionState) {
                                           case ConnectionState.waiting:
                                           case ConnectionState.active:
-                                            return CircularProgressIndicator();
+                                            return const CircularProgressIndicator();
 
                                           case ConnectionState.done:
                                             return Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Text(
-                                                    'Car Type : ${snapshot.data!.carType}'),
-                                                Text(
-                                                    'Car Model : ${snapshot.data!.carModel}'),
-                                                Text(
-                                                    'plate Number : ${snapshot.data!.plate_number}'),
+                                                TripHistoryItem(
+                                                    keyy: 'Car Type',
+                                                    value:
+                                                        snapshot.data!.carType),
+                                                TripHistoryItem(
+                                                    keyy: 'Car Model',
+                                                    value: snapshot
+                                                        .data!.carModel),
+                                                TripHistoryItem(
+                                                    keyy: 'plate Number',
+                                                    value: snapshot
+                                                        .data!.plateNumber),
                                               ],
                                             );
                                           default:
-                                            return CircularProgressIndicator();
+                                            return const CircularProgressIndicator();
                                         }
                                       }),
                                 ],
                               );
                             default:
-                              return CircularProgressIndicator();
+                              return const CircularProgressIndicator();
                           }
                         }),
                   ],
@@ -161,150 +178,8 @@ class Home extends StatelessWidget {
                 return BookTripScreen();
               }
             default:
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
           }
         }));
   }
 }
-
-
-// Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           SizedBox(
-//             height: context.screenHeight * 0.02,
-//           ),
-//           FutureBuilder(
-//               future: FirestoreDatabase.checkForOnProgressTrip(
-//                   BasicAuthProvider.currentCustome().uid, null),
-//               builder: ((context, snapshot) {
-//                 switch (snapshot.connectionState) {
-//                   case ConnectionState.waiting:
-//                   case ConnectionState.active:
-//                     return CircularProgressIndicator();
-
-//                   case ConnectionState.done:
-//                     if (snapshot.data != null) {
-//                       return Column(
-//                         mainAxisSize: MainAxisSize.min,
-//                         children: [
-//                           Text('Pick Up : ${snapshot.data!.pickUp}'),
-//                           Text('Destination : ${snapshot.data!.destination}'),
-//                           Text('Time : ${snapshot.data!.time}'),
-//                           Text('Car Fare : ${snapshot.data!.carFare}'),
-//                           FutureBuilder(
-//                               future: FirestoreDatabase.getDriver(
-//                                   snapshot.data!.driverID),
-//                               builder: (context, snapshot) {
-//                                 switch (snapshot.connectionState) {
-//                                   case ConnectionState.waiting:
-//                                   case ConnectionState.active:
-//                                     return CircularProgressIndicator();
-
-//                                   case ConnectionState.done:
-//                                     return Column(
-//                                       mainAxisSize: MainAxisSize.min,
-//                                       children: [
-//                                         Text(
-//                                             'Driver : ${snapshot.data!.fullname}'),
-//                                         Text(
-//                                             'Phone Number : ${snapshot.data!.phoneNumber}'),
-//                                         FutureBuilder(
-//                                             future: FirestoreDatabase.getCar(
-//                                                 snapshot.data!.carRef),
-//                                             builder: (context, snapshot) {
-//                                               switch (
-//                                                   snapshot.connectionState) {
-//                                                 case ConnectionState.waiting:
-//                                                 case ConnectionState.active:
-//                                                   return CircularProgressIndicator();
-
-//                                                 case ConnectionState.done:
-//                                                   return Column(
-//                                                     mainAxisSize:
-//                                                         MainAxisSize.min,
-//                                                     children: [
-//                                                       Text(
-//                                                           'Car Type : ${snapshot.data!.carType}'),
-//                                                       Text(
-//                                                           'Car Model : ${snapshot.data!.carModel}'),
-//                                                       Text(
-//                                                           'plate Number : ${snapshot.data!.plate_number}'),
-//                                                     ],
-//                                                   );
-//                                                 default:
-//                                                   return CircularProgressIndicator();
-//                                               }
-//                                             }),
-//                                       ],
-//                                     );
-//                                   default:
-//                                     return CircularProgressIndicator();
-//                                 }
-//                               }),
-//                         ],
-//                       );
-//                     } else {
-//                       return CustomButton(
-//                         title: 'Book a Trip',
-//                         onPress: () {
-//                           Navigator.of(context).pushNamed('bookTripScreen');
-//                         },
-//                         buttonColor: AppTheme.redColor,
-//                         borderRadius: AppTheme.boxRadius,
-//                         borderColor: AppTheme.blackColor,
-//                         buttonWidth: context.screenWidth * 0.7,
-//                         buttonHeight: context.screenHeight * 0.08,
-//                         fontSize: AppTheme.fontSize12(context),
-//                       );
-//                     }
-//                   default:
-//                     return CircularProgressIndicator();
-//                 }
-//               })),
-//           SizedBox(
-//             height: context.screenHeight * 0.02,
-//           ),
-//           CustomButton(
-//               title: 'Previous Trips',
-//               onPress: () {
-//                 Navigator.of(context).pushNamed('customerPreviousTripsScreen');
-//               },
-//               buttonColor: AppTheme.redColor,
-//               borderRadius: AppTheme.boxRadius,
-//               borderColor: AppTheme.blackColor,
-//               buttonWidth: context.screenWidth * 0.7,
-//               buttonHeight: context.screenHeight * 0.06,
-//               fontSize: AppTheme.fontSize12(context)),
-//           SizedBox(
-//             height: context.screenHeight * 0.02,
-//           ),
-//           CustomButton(
-//               title: 'Add Complain',
-//               onPress: () {
-//                 Navigator.of(context).pushNamed('addComplainScreen');
-//               },
-//               buttonColor: AppTheme.redColor,
-//               borderRadius: AppTheme.boxRadius,
-//               borderColor: AppTheme.blackColor,
-//               buttonWidth: context.screenWidth * 0.7,
-//               buttonHeight: context.screenHeight * 0.06,
-//               fontSize: AppTheme.fontSize12(context)),
-//           SizedBox(
-//             height: context.screenHeight * 0.02,
-//           ),
-//           CustomButton(
-//             title: 'Update Profile',
-//             onPress: () {
-//               Navigator.of(context).pushNamed('updateProfileScreen');
-//             },
-//             buttonColor: AppTheme.redColor,
-//             borderRadius: AppTheme.boxRadius,
-//             borderColor: AppTheme.blackColor,
-//             buttonWidth: context.screenWidth * 0.7,
-//             buttonHeight: context.screenHeight * 0.08,
-//             fontSize: AppTheme.fontSize12(context),
-//           )
-//         ],
-//       ),
-      

@@ -28,9 +28,9 @@ class RegisterScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.arrow_back_ios_new_rounded),
-                  SpacingSizedBox(height: false, width: true),
-                  SpacingSizedBox(height: false, width: true),
+                  const Icon(Icons.arrow_back_ios_new_rounded),
+                  const SpacingSizedBox(height: false, width: true),
+                  const SpacingSizedBox(height: false, width: true),
                   Text(
                     'Back',
                     style: TextStyle(fontSize: AppTheme.fontSize8(context)),
@@ -59,10 +59,10 @@ class RegisterScreen extends StatelessWidget {
                       fontWeight: AppTheme.fontWeight500),
                 ),
               ),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomTextField(
                 hintText: 'Name',
                 trailingIcon: null,
@@ -71,9 +71,9 @@ class RegisterScreen extends StatelessWidget {
                 filled: false,
                 inputType: TextInputType.text,
               ),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomTextField(
                   hintText: 'Email',
                   trailingIcon: null,
@@ -81,9 +81,9 @@ class RegisterScreen extends StatelessWidget {
                   controller: _emailController,
                   filled: false,
                   inputType: TextInputType.emailAddress),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomTextField(
                   hintText: 'Password',
                   trailingIcon: null,
@@ -91,9 +91,9 @@ class RegisterScreen extends StatelessWidget {
                   controller: _passwordController,
                   filled: false,
                   inputType: TextInputType.text),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomTextField(
                   hintText: 'Confirm Password',
                   trailingIcon: null,
@@ -101,11 +101,11 @@ class RegisterScreen extends StatelessWidget {
                   controller: _confirmPasswordController,
                   filled: false,
                   inputType: TextInputType.text),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomButton(
                 title: 'Register',
                 onPress: () async {
@@ -116,7 +116,7 @@ class RegisterScreen extends StatelessWidget {
                         _emailController.text,
                         _passwordController.text);
                     if (result) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Center(
                           child: Text('Regsitered Successfully'),
                         ),
@@ -124,7 +124,7 @@ class RegisterScreen extends StatelessWidget {
                       Navigator.of(context).pushNamed('addPhoneNumberScreen');
                     }
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Center(
                         child: Text('Regsiter Failed'),
                       ),
@@ -147,118 +147,4 @@ class RegisterScreen extends StatelessWidget {
 }
 
 
-// import 'dart:developer';
 
-// import 'package:flutter/material.dart';
-// import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
-// import 'package:uber_clone_app/utils/app_theme.dart';
-// import 'package:uber_clone_app/utils/screen_size.dart';
-// import 'package:uber_clone_app/widgets/custom_button.dart';
-// import 'package:uber_clone_app/widgets/custom_text_field.dart';
-// import 'package:uber_clone_app/widgets/main_layout.dart';
-
-// class RegisterScreen extends StatelessWidget {
-//   RegisterScreen({super.key});
-//   final _nameController = TextEditingController();
-//   final _emailController = TextEditingController();
-//   final _passwordController = TextEditingController();
-//   final _phoneNumberController = TextEditingController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MainLayout(
-//       body: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           SizedBox(
-//             height: context.screenHeight * 0.02,
-//           ),
-//           CustomTextField(
-//             hintText: 'Name',
-//             trailingIcon: null,
-//             obsecured: false,
-//             controller: _nameController,
-//             filled: false,
-//             inputType: TextInputType.text,
-//           ),
-//           SizedBox(
-//             height: context.screenHeight / 50,
-//           ),
-//           CustomTextField(
-//               hintText: 'Email',
-//               trailingIcon: null,
-//               obsecured: false,
-//               controller: _emailController,
-//               filled: false,
-//               inputType: TextInputType.emailAddress),
-//           SizedBox(
-//             height: context.screenHeight / 50,
-//           ),
-//           CustomTextField(
-//               hintText: 'Password',
-//               trailingIcon: null,
-//               obsecured: true,
-//               controller: _passwordController,
-//               filled: false,
-//               inputType: TextInputType.text),
-//           SizedBox(
-//             height: context.screenHeight / 50,
-//           ),
-//           // CustomTextField(
-//           //     hintText: 'Phone Number',
-//           //     trailingIcon: null,
-//           //     obsecured: false,
-//           //     controller: _phoneNumberController,
-//           //     filled: false,
-//           //     inputType: TextInputType.number),
-//           SizedBox(
-//             height: context.screenHeight / 50,
-//           ),
-//           CustomButton(
-//             title: 'Register',
-//             onPress: () async {
-//               try {
-//                 await BasicAuthProvider.register(_nameController.text,
-//                     _emailController.text, _passwordController.text);
-//                 Navigator.of(context).pushNamed('addPhoneNumberScreen');
-//               } catch (e) {
-//                 log(e.toString());
-//               }
-//             },
-//             buttonColor: AppTheme.redColor,
-//             borderRadius: AppTheme.boxRadius,
-//             borderColor: AppTheme.blackColor,
-//             buttonWidth: context.screenWidth * 0.7,
-//             buttonHeight: context.screenHeight * 0.08,
-//             fontSize: AppTheme.fontSize12(context),
-//           ),
-//           SizedBox(
-//             height: context.screenHeight / 50,
-//           ),
-//           Text(
-//             "Do you have an account?",
-//             style: TextStyle(
-//               fontSize: context.screenHeight / context.screenWidth * 10,
-//               color: Color.fromRGBO(9, 77, 61, 1),
-//             ),
-//           ),
-//           SizedBox(
-//             height: context.screenHeight / 50,
-//           ),
-//           CustomButton(
-//               title: 'Login',
-//               onPress: () {
-//                 Navigator.of(context)
-//                     .pushNamedAndRemoveUntil('loginScreen', (route) => false);
-//               },
-//               buttonColor: AppTheme.redColor,
-//               borderRadius: AppTheme.boxRadius,
-//               borderColor: AppTheme.blackColor,
-//               buttonWidth: context.screenWidth * 0.7,
-//               buttonHeight: context.screenHeight * 0.08,
-//               fontSize: AppTheme.fontSize12(context)),
-//         ],
-//       ),
-//     );
-//   }
-// }

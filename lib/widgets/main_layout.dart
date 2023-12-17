@@ -8,15 +8,17 @@ class MainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: bottomNavBar,
-      body: SelectionArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: context.screenWidth / 40,
-                vertical: context.screenHeight * 0.05),
-            child: body,
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: bottomNavBar,
+        body: SelectionArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: context.screenWidth / 40,
+                  vertical: context.screenHeight * 0.05),
+              child: body,
+            ),
           ),
         ),
       ),

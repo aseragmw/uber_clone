@@ -26,9 +26,9 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.arrow_back_ios_new_rounded),
-                  SpacingSizedBox(height: false, width: true),
-                  SpacingSizedBox(height: false, width: true),
+                  const Icon(Icons.arrow_back_ios_new_rounded),
+                  const SpacingSizedBox(height: false, width: true),
+                  const SpacingSizedBox(height: false, width: true),
                   Text(
                     'Back',
                     style: TextStyle(fontSize: AppTheme.fontSize8(context)),
@@ -57,10 +57,10 @@ class LoginScreen extends StatelessWidget {
                       fontWeight: AppTheme.fontWeight500),
                 ),
               ),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomTextField(
                   hintText: 'Email',
                   trailingIcon: null,
@@ -68,9 +68,9 @@ class LoginScreen extends StatelessWidget {
                   controller: _emailController,
                   filled: false,
                   inputType: TextInputType.emailAddress),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomTextField(
                   hintText: 'Password',
                   trailingIcon: null,
@@ -78,23 +78,23 @@ class LoginScreen extends StatelessWidget {
                   controller: _passwordController,
                   filled: false,
                   inputType: TextInputType.text),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               CustomButton(
                 title: 'Login',
                 onPress: () async {
                   final loginResult = await BasicAuthProvider.getInstance().login(
                       _emailController.text, _passwordController.text);
                   if (loginResult) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Center(child: Text("Logged In Successfuly"))));
                     Navigator.of(context).pushNamed('customerHomeScreen');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Center(child: Text("Login Failed"))));
+                        const SnackBar(content: Center(child: Text("Login Failed"))));
                   }
                 },
                 buttonColor: AppTheme.yellowColor,
@@ -113,12 +113,12 @@ class LoginScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: context.screenWidth * 0.4, child: Divider()),
+                SizedBox(width: context.screenWidth * 0.4, child: const Divider()),
                 Text(
                   'or',
                   style: TextStyle(fontSize: AppTheme.fontSize10(context)),
                 ),
-                SizedBox(width: context.screenWidth * 0.4, child: Divider())
+                SizedBox(width: context.screenWidth * 0.4, child: const Divider())
               ],
             ),
           ),
@@ -152,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SpacingSizedBox(height: true, width: false),
+              const SpacingSizedBox(height: true, width: false),
               InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed(

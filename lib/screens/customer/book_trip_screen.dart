@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
-import 'package:uber_clone_app/widgets/main_layout.dart';
 import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 
 class BookTripScreen extends StatelessWidget {
@@ -21,8 +19,8 @@ class BookTripScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             hintText: 'Detailed Pick Up Address',
             trailingIcon: null,
@@ -30,8 +28,8 @@ class BookTripScreen extends StatelessWidget {
             controller: _pickUpController,
             filled: false,
             inputType: TextInputType.text),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             hintText: 'Detailed Destenation',
             trailingIcon: null,
@@ -39,8 +37,8 @@ class BookTripScreen extends StatelessWidget {
             controller: _destenationController,
             filled: false,
             inputType: TextInputType.emailAddress),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             hintText: 'Trip Time',
             trailingIcon: null,
@@ -48,8 +46,8 @@ class BookTripScreen extends StatelessWidget {
             controller: _tripTimeController,
             filled: false,
             inputType: TextInputType.text),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             hintText: 'Car Fare',
             trailingIcon: null,
@@ -57,9 +55,9 @@ class BookTripScreen extends StatelessWidget {
             controller: _carFareTimeController,
             filled: false,
             inputType: TextInputType.text),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomButton(
           title: 'Confirm Trip',
           onPress: () async {
@@ -69,12 +67,11 @@ class BookTripScreen extends StatelessWidget {
                 _tripTimeController.text,
                 _carFareTimeController.text);
             if (result) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text("Trip Confirmed")));
-              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Trip Confirmed")));
             } else {
               ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text("Error Occured")));
+                  .showSnackBar(const SnackBar(content: Text("Error Occured")));
             }
           },
           buttonColor: AppTheme.yellowColor,

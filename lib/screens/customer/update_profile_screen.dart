@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
-import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
-import 'package:uber_clone_app/widgets/main_layout.dart';
 import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
@@ -21,8 +19,8 @@ class UpdateProfileScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             hintText: 'Your Name',
             trailingIcon: null,
@@ -30,8 +28,8 @@ class UpdateProfileScreen extends StatelessWidget {
             controller: _nameController,
             filled: false,
             inputType: TextInputType.text),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             hintText: 'Your Email Address',
             trailingIcon: null,
@@ -39,9 +37,9 @@ class UpdateProfileScreen extends StatelessWidget {
             controller: _emailController,
             filled: false,
             inputType: TextInputType.emailAddress),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomButton(
           title: 'Save Changes',
           onPress: () async {
@@ -62,10 +60,10 @@ class UpdateProfileScreen extends StatelessWidget {
                       .update({'email': _emailController.text});
                 });
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Email changed")));
+                    .showSnackBar(const SnackBar(content: Text("Email changed")));
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Error Occured changing email")));
+                    const SnackBar(content: Text("Error Occured changing email")));
               }
             }
 
@@ -76,7 +74,7 @@ class UpdateProfileScreen extends StatelessWidget {
 
               if (result) {
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Name changed")));
+                    .showSnackBar(const SnackBar(content: Text("Name changed")));
                 await FirebaseFirestore.instance
                     .collection("customers")
                     .where('customer_id',
@@ -90,7 +88,7 @@ class UpdateProfileScreen extends StatelessWidget {
                 });
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Error Occured changing Name")));
+                    const SnackBar(content: Text("Error Occured changing Name")));
               }
             }
           },
@@ -101,14 +99,14 @@ class UpdateProfileScreen extends StatelessWidget {
           buttonHeight: context.screenHeight * 0.08,
           fontSize: AppTheme.fontSize10(context),
         ),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
               width: context.screenWidth * 0.4,
-              child: Divider(),
+              child: const Divider(),
             ),
             Text(
               'or',
@@ -118,12 +116,12 @@ class UpdateProfileScreen extends StatelessWidget {
             ),
             SizedBox(
               width: context.screenWidth * 0.4,
-              child: Divider(),
+              child: const Divider(),
             ),
           ],
         ),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomButton(
           title: 'Change Phone Number',
           onPress: () {
@@ -137,8 +135,8 @@ class UpdateProfileScreen extends StatelessWidget {
           fontColor: AppTheme.yellowColor,
           fontSize: AppTheme.fontSize10(context),
         ),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomButton(
           title: 'Change Password',
           onPress: () {
@@ -152,8 +150,8 @@ class UpdateProfileScreen extends StatelessWidget {
           fontColor: AppTheme.yellowColor,
           fontSize: AppTheme.fontSize10(context),
         ),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomButton(
           title: 'Log Out',
           onPress: () async {
@@ -162,7 +160,7 @@ class UpdateProfileScreen extends StatelessWidget {
               Navigator.of(context)
                   .pushNamedAndRemoveUntil('welcomeScreen', (route) => false);
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Center(
                 child: Text('Error Occured'),
               )));

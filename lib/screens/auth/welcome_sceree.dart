@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
-import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
 import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  WelcomeScreen({super.key});
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +22,11 @@ class WelcomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: context.screenHeight * 0.07,
+              height: context.screenHeight * 0.04,
             ),
             Image.asset('assets/welcome_screen_vector.png'),
-            SpacingSizedBox(height: true, width: false),
-            SpacingSizedBox(height: true, width: false),
+            const SpacingSizedBox(height: true, width: false),
+            const SpacingSizedBox(height: true, width: false),
             Text(
               'Tawseela',
               style: TextStyle(
@@ -65,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                 buttonWidth: context.screenWidth * 0.8,
                 buttonHeight: context.screenHeight * 0.08,
                 fontSize: AppTheme.fontSize10(context)),
-            SpacingSizedBox(height: true, width: false),
+            const SpacingSizedBox(height: true, width: false),
             CustomButton(
                 title: 'Login',
                 onPress: () {

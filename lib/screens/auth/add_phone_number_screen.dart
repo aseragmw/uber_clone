@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/screens/auth/confirm_otp_screen.dart';
-import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_app_bar.dart';
@@ -25,9 +24,9 @@ class AddPhoneNumberScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.arrow_back_ios_new_rounded),
-                  SpacingSizedBox(height: false, width: true),
-                  SpacingSizedBox(height: false, width: true),
+                  const Icon(Icons.arrow_back_ios_new_rounded),
+                  const SpacingSizedBox(height: false, width: true),
+                  const SpacingSizedBox(height: false, width: true),
                   Text(
                     'Back',
                     style: TextStyle(fontSize: AppTheme.fontSize8(context)),
@@ -53,10 +52,10 @@ class AddPhoneNumberScreen extends StatelessWidget {
                   fontWeight: AppTheme.fontWeight500),
             ),
           ),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
           CustomTextField(
               hintText: 'Phone Number',
               trailingIcon: null,
@@ -64,9 +63,9 @@ class AddPhoneNumberScreen extends StatelessWidget {
               controller: _phoneNumberController,
               filled: false,
               inputType: TextInputType.phone),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
           CustomButton(
             title: 'Send OTP',
             onPress: () async {

@@ -1,71 +1,102 @@
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
+import 'package:uber_clone_app/screens/empolyee/add_car_screen.dart';
+import 'package:uber_clone_app/screens/empolyee/add_driver_screen.dart';
+import 'package:uber_clone_app/screens/empolyee/view_complaints_screen.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
+import 'package:uber_clone_app/widgets/custom_app_bar.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
-import 'package:uber_clone_app/widgets/custom_text_field.dart';
 import 'package:uber_clone_app/widgets/main_layout.dart';
 
-class EmployeeHomeScreen extends StatelessWidget {
-  EmployeeHomeScreen({super.key});
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class EmployeeProfileScreen extends StatelessWidget {
+  const EmployeeProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CustomButton(
+          title: 'Log Out',
+          onPress: () {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('welcomeScreen', (route) => false);
+          },
+          buttonColor: AppTheme.yellowColor,
+          borderRadius: AppTheme.boxRadius,
+          borderColor: null,
+          buttonWidth: context.screenWidth * 0.8,
+          buttonHeight: context.screenHeight * 0.08,
+          fontSize: AppTheme.fontSize10(context)),
+    );
+  }
+}
+
+class EmployeeHomeScreen extends StatefulWidget {
+  const EmployeeHomeScreen({super.key});
+
+  @override
+  State<EmployeeHomeScreen> createState() => _EmployeeHomeScreenState();
+}
+
+class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
+  int _selectedIndex = 0;
+
+  List<Widget> tabItems = [
+    const AddDriverScreen(),
+    AddCarScreen(),
+    const ViewComplaintsScreen(),
+    const EmployeeProfileScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return MainLayout(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: context.screenHeight * 0.02,
+          const CustomAppBar(
+            leadingWidget: null,
+            trailingWidget: null,
+            leadingOnTap: null,
+            trailingOnTap: null,
+            centeredTitle: 'Tawseela Employee App',
+            titleColor: AppTheme.yellowColor,
           ),
-          CustomButton(
-            title: 'Add A Driver',
-            onPress: () {
-              Navigator.of(context).pushNamed('addDriverScreen');
-            },
-            buttonColor: AppTheme.redColor,
-            borderRadius: AppTheme.boxRadius,
-            borderColor: AppTheme.blackColor,
-            buttonWidth: context.screenWidth * 0.7,
-            buttonHeight: context.screenHeight * 0.08,
-            fontSize: AppTheme.fontSize12(context),
-          ),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-              title: 'Add A Car',
-              onPress: () {
-                Navigator.of(context).pushNamed(
-                  'addCarScreen',
-                );
-              },
-              buttonColor: AppTheme.redColor,
-              borderRadius: AppTheme.boxRadius,
-              borderColor: AppTheme.blackColor,
-              buttonWidth: context.screenWidth * 0.7,
-              buttonHeight: context.screenHeight * 0.08,
-              fontSize: AppTheme.fontSize12(context)),
-          SizedBox(
-            height: context.screenHeight / 50,
-          ),
-          CustomButton(
-              title: 'View Complaints',
-              onPress: () {
-                Navigator.of(context).pushNamed(
-                  'viewComplaintsScreen',
-                );
-              },
-              buttonColor: AppTheme.redColor,
-              borderRadius: AppTheme.boxRadius,
-              borderColor: AppTheme.blackColor,
-              buttonWidth: context.screenWidth * 0.7,
-              buttonHeight: context.screenHeight * 0.08,
-              fontSize: AppTheme.fontSize12(context)),
+          tabItems[_selectedIndex],
         ],
       ),
+      bottomNavBar: FlashyTabBar(
+        animationCurve: Curves.linear,
+        selectedIndex: _selectedIndex,
+        iconSize: 30,
+        showElevation: false, // use this to remove appBar's elevation
+        onItemSelected: (index) => setState(() {
+          _selectedIndex = index;
+        }),
+        items: [
+          FlashyTabBarItem(
+            activeColor: AppTheme.yellowColor,
+            icon: const Icon(Icons.face),
+            title: const Text('Add A Driver'),
+          ),
+          FlashyTabBarItem(
+            activeColor: AppTheme.yellowColor,
+            icon: const Icon(Icons.car_repair),
+            title: const Text('Add A Car'),
+          ),
+          FlashyTabBarItem(
+            activeColor: AppTheme.yellowColor,
+            icon: const Icon(Icons.warning),
+            title: const Text('Complaints'),
+          ),
+          FlashyTabBarItem(
+            activeColor: AppTheme.yellowColor,
+            icon: const Icon(Icons.face),
+            title: const Text('Profile'),
+          ),
+        ],
+      ),
+     
+      
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
-import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_app_bar.dart';
@@ -26,9 +25,9 @@ class ChangePasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(Icons.arrow_back_ios_new_rounded),
-                  SpacingSizedBox(height: false, width: true),
-                  SpacingSizedBox(height: false, width: true),
+                  const Icon(Icons.arrow_back_ios_new_rounded),
+                  const SpacingSizedBox(height: false, width: true),
+                  const SpacingSizedBox(height: false, width: true),
                   Text(
                     'Back',
                     style: TextStyle(fontSize: AppTheme.fontSize8(context)),
@@ -54,10 +53,10 @@ class ChangePasswordScreen extends StatelessWidget {
                   fontWeight: AppTheme.fontWeight500),
             ),
           ),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
-          SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
+          const SpacingSizedBox(height: true, width: false),
           CustomTextField(
               hintText: 'Password',
               trailingIcon: null,
@@ -86,16 +85,16 @@ class ChangePasswordScreen extends StatelessWidget {
                     _passwordController.text);
                 if (result) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Password changed")));
+                      const SnackBar(content: Text("Password changed")));
 
                   Navigator.of(context).pop();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text(
                           "Error Occured changing password, Please Logout and try again")));
                 }
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content:
                         Text("Password and confirm password should match")));
               }

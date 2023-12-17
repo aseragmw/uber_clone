@@ -5,7 +5,6 @@ import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
 import 'package:uber_clone_app/widgets/custom_text_field.dart';
-import 'package:uber_clone_app/widgets/main_layout.dart';
 import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 
 class AddComplainScreen extends StatelessWidget {
@@ -17,8 +16,8 @@ class AddComplainScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomTextField(
             maxLines: 10,
             hintText: 'Please write your complain',
@@ -27,9 +26,9 @@ class AddComplainScreen extends StatelessWidget {
             controller: _complainController,
             filled: false,
             inputType: TextInputType.text),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
-        SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
+        const SpacingSizedBox(height: true, width: false),
         CustomButton(
           title: 'Submit',
           onPress: () async {
@@ -38,11 +37,11 @@ class AddComplainScreen extends StatelessWidget {
                 BasicAuthProvider.getInstance().currentCustome().uid);
             if (result) {
               ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text("Complain Submitted")));
+                  .showSnackBar(const SnackBar(content: Text("Complain Submitted")));
               Navigator.of(context).pop();
             } else {
               ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text("Error Occured")));
+                  .showSnackBar(const SnackBar(content: Text("Error Occured")));
             }
           },
           buttonColor: AppTheme.yellowColor,

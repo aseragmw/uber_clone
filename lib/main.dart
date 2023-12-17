@@ -22,7 +22,6 @@ import 'package:uber_clone_app/screens/empolyee/add_car_screen.dart';
 import 'package:uber_clone_app/screens/empolyee/add_driver_screen.dart';
 import 'package:uber_clone_app/screens/empolyee/employee_home_screen.dart';
 import 'package:uber_clone_app/screens/empolyee/view_complaints_screen.dart';
-import 'package:uber_clone_app/services/auth/basic_auth_provider.dart';
 import 'package:uber_clone_app/utils/app_constants.dart';
 
 void main() async {
@@ -33,9 +32,7 @@ void main() async {
   );
       AppConstants.initAppConstants();
 
-      VehicleManager vehicleManager = VehicleManager();
 
-  // Register prototype instances
   VehicleManager.registerPrototype("car", Car('','','','',''));
 
   runApp(const MyApp());
@@ -59,28 +56,22 @@ class MyApp extends StatelessWidget {
         "employeeLoginScreen": (context) => EmployeeLoginScreen(),
         "registerScreen": (context) => RegisterScreen(),
         "addPhoneNumberScreen": (context) => AddPhoneNumberScreen(),
-        "addDriverScreen": (context) => AddDriverScreen(),
+        "addDriverScreen": (context) => const AddDriverScreen(),
         "addCarScreen": (context) => AddCarScreen(),
-        "employeeHomeScreen": (context) => EmployeeHomeScreen(),
-        "customerHomeScreen": (context) => CustomerHomeScreen(),
-        "driverHomeScreen": (context) => DriverHomeScreen(),
-        "viewAvailableTripsScreen": (context) => ViewAvailableTripsScreen(),
+        "employeeHomeScreen": (context) => const EmployeeHomeScreen(),
+        "customerHomeScreen": (context) => const CustomerHomeScreen(),
+        "driverHomeScreen": (context) => const DriverHomeScreen(),
+        "viewAvailableTripsScreen": (context) => const ViewAvailableTripsScreen(),
         "bookTripScreen": (context) => BookTripScreen(),
-        "customerPreviousTripsScreen": (context) => CustomerPreviousTripsScreen(),
-        "driverPreviousTripsScreen": (context) => DriverrPreviousTripsScreen(),
+        "customerPreviousTripsScreen": (context) => const CustomerPreviousTripsScreen(),
+        "driverPreviousTripsScreen": (context) => const DriverrPreviousTripsScreen(),
         "addComplainScreen": (context) => AddComplainScreen(),
-        "viewComplaintsScreen": (context) => ViewComplaintsScreen(),
+        "viewComplaintsScreen": (context) => const ViewComplaintsScreen(),
         "updateProfileScreen": (context) => UpdateProfileScreen(),
         "changePasswordScreen": (context) => ChangePasswordScreen(),
-                "welcomeScreen": (context) => WelcomeScreen(),
-
-
-
-
-
-
-      },
-      home: WelcomeScreen(),
+        "welcomeScreen": (context) => const WelcomeScreen(),
+        },
+      home: const WelcomeScreen(),
     );
   }
 }

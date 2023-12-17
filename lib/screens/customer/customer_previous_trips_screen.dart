@@ -4,11 +4,11 @@ import 'package:uber_clone_app/services/firestore/firestore_database.dart';
 import 'package:uber_clone_app/utils/app_theme.dart';
 import 'package:uber_clone_app/utils/screen_size.dart';
 import 'package:uber_clone_app/widgets/custom_button.dart';
-import 'package:uber_clone_app/widgets/main_layout.dart';
 import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
+import 'package:uber_clone_app/widgets/trip_history_item.dart';
 
 class CustomerPreviousTripsScreen extends StatelessWidget {
-  CustomerPreviousTripsScreen({super.key});
+  const CustomerPreviousTripsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,11 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                 case ConnectionState.active:
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
 
                 case ConnectionState.done:
                   return ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
@@ -46,13 +46,13 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                                 keyy: 'Car Fare',
                                 value: snapshot.data![index].carFare),
                             FutureBuilder(
-                                future: FirestoreDatabase.getInstance().getDriver(
-                                    snapshot.data![index].driverID),
+                                future: FirestoreDatabase.getInstance()
+                                    .getDriver(snapshot.data![index].driverID),
                                 builder: (context, snapshot) {
                                   switch (snapshot.connectionState) {
                                     case ConnectionState.waiting:
                                     case ConnectionState.active:
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
 
                                     case ConnectionState.done:
                                       return Column(
@@ -66,14 +66,16 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                                               value:
                                                   snapshot.data!.phoneNumber),
                                           FutureBuilder(
-                                              future: FirestoreDatabase.getInstance().getCar(
-                                                  snapshot.data!.carRef),
+                                              future: FirestoreDatabase
+                                                      .getInstance()
+                                                  .getCar(
+                                                      snapshot.data!.carRef),
                                               builder: (context, snapshot) {
                                                 switch (
                                                     snapshot.connectionState) {
                                                   case ConnectionState.waiting:
                                                   case ConnectionState.active:
-                                                    return CircularProgressIndicator();
+                                                    return const CircularProgressIndicator();
 
                                                   case ConnectionState.done:
                                                     return Column(
@@ -94,20 +96,20 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                                                                 'Plate Number',
                                                             value: snapshot
                                                                 .data!
-                                                                .plate_number),
+                                                                .plateNumber),
                                                       ],
                                                     );
                                                   default:
-                                                    return CircularProgressIndicator();
+                                                    return const CircularProgressIndicator();
                                                 }
                                               }),
                                         ],
                                       );
                                     default:
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                   }
                                 }),
-                            SpacingSizedBox(height: true, width: false),
+                            const SpacingSizedBox(height: true, width: false),
                             CustomButton(
                                 title: 'Rate Driver',
                                 onPress: () {},
@@ -118,51 +120,16 @@ class CustomerPreviousTripsScreen extends StatelessWidget {
                                 buttonHeight: context.screenHeight * 0.08,
                                 fontColor: AppTheme.yellowColor,
                                 fontSize: AppTheme.fontSize10(context)),
-                            SpacingSizedBox(height: true, width: false),
-                            Divider(),
+                            const SpacingSizedBox(height: true, width: false),
+                            const Divider(),
                           ],
                         );
                       });
                 default:
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
               }
             })),
       ],
-    );
-  }
-}
-
-class TripHistoryItem extends StatelessWidget {
-  const TripHistoryItem({super.key, required this.keyy, required this.value});
-  final String keyy;
-  final String value;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(context.screenAspectRatio * 5),
-      margin: EdgeInsets.symmetric(vertical: context.screenAspectRatio * 2),
-      decoration: BoxDecoration(
-        color: AppTheme.yellowColor,
-        borderRadius: AppTheme.boxRadius,
-      ),
-      width: context.screenWidth * 0.9,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '${keyy}',
-            style: TextStyle(
-                fontSize: AppTheme.fontSize8(context),
-                fontWeight: AppTheme.fontWeight400),
-          ),
-          Text(
-            '${value}',
-            style: TextStyle(
-                fontSize: AppTheme.fontSize8(context),
-                fontWeight: AppTheme.fontWeight400),
-          ),
-        ],
-      ),
     );
   }
 }

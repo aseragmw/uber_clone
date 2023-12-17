@@ -9,17 +9,8 @@ class AppTheme {
   static const Color greyOneColor = Color(0xffF1F2F4);
   static const Color darkBlueColor = Color(0xff262C4D);
   static const Color yellowColor = Color(0xffEDAE10);
-
   static const Color transparentColor = Colors.transparent;
 
-  //Font Sizes
-  // static double fontSize12 = 12;
-  // static double fontSize14 = 14;
-  // static double fontSize16 = 16;
-  // static double fontSize18 = 18;
-  // static double fontSize20 = 20;
-  // static double fontSize22 = 22;
-  // static double fontSize30 = 30;
 
   static double fontSize4(BuildContext context) {
     return context.screenAspectRatio * 4;
@@ -65,10 +56,7 @@ class AppTheme {
     return context.screenAspectRatio * 30;
   }
 
-  static double fontSize40 = 40;
-
-  static double fontSize50 = 50;
-  static double fontSize72 = 72;
+  
 
   //Font Weights
   static const FontWeight fontWeight400 = FontWeight.w400;
