@@ -24,7 +24,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 
   List<Widget> tabItems = [
     const Home(),
-    CustomerPreviousTripsScreen(),
+    const CustomerPreviousTripsScreen(),
     AddComplainScreen(),
     UpdateProfileScreen()
   ];

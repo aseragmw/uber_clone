@@ -28,7 +28,7 @@ class DriverrPreviousTripsScreen extends StatelessWidget {
                   );
 
                 case ConnectionState.done:
-                  if (snapshot.hasData && snapshot.data!.length != 0) {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

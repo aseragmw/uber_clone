@@ -160,6 +160,7 @@ class FirestoreDatabase {
         final tripsData = await firestore
             .collection('trips')
             .where('driverID', isEqualTo: driverId)
+            .where('status', isEqualTo: 'finished')
             .get();
         for (var element in tripsData.docs) {
           trips.add(TripModel(

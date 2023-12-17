@@ -9,7 +9,7 @@ import 'package:uber_clone_app/widgets/spacing_sized_box.dart';
 import 'package:uber_clone_app/widgets/trip_history_item.dart';
 
 class CustomerPreviousTripsScreen extends StatefulWidget {
-  CustomerPreviousTripsScreen({super.key});
+  const CustomerPreviousTripsScreen({super.key});
 
   @override
   State<CustomerPreviousTripsScreen> createState() =>
@@ -158,13 +158,13 @@ class _CustomerPreviousTripsScreenState
                                                               .toString());
                                               if (result) {
                                                 ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
+                                                    .showSnackBar(const SnackBar(
                                                         content: Center(
                                                   child: Text('Rate Added'),
                                                 )));
                                               } else {
                                                 ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
+                                                    .showSnackBar(const SnackBar(
                                                         content: Center(
                                                   child: Text('Error Occured'),
                                                 )));
