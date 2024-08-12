@@ -84,7 +84,7 @@ class BasicAuthProvider {
       log('2 ${verifyId.toString()}');
     } catch (e) {
       //TODO add auth exeptions
-      log('error updating display name');
+      log('error updating phone number');
     }
   }
 

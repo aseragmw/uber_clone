@@ -8,7 +8,7 @@ import 'package:uber_clone_app/screens/auth/driver_login.dart';
 import 'package:uber_clone_app/screens/auth/employee_login.dart';
 import 'package:uber_clone_app/screens/auth/login_screen.dart';
 import 'package:uber_clone_app/screens/auth/register_screen.dart';
-import 'package:uber_clone_app/screens/auth/welcome_sceree.dart';
+import 'package:uber_clone_app/screens/auth/welcome_scereen.dart';
 import 'package:uber_clone_app/screens/customer/add_complain_screen.dart';
 import 'package:uber_clone_app/screens/customer/book_trip_screen.dart';
 import 'package:uber_clone_app/screens/customer/change_password_screen.dart';
